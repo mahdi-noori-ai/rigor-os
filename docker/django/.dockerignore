@@ -1,0 +1,14 @@
+.git
+**/.venv
+**/node_modules
+**/__pycache__
+**/*.pyc
+.env
+.env.*
+!.env.example
+dist
+build
+.coverage
+htmlcov
+media
+*.sqlite3

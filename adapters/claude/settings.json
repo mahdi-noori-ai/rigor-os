@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "deny": [
+      "Bash(rm -rf /)",
+      "Bash(git push --force*)",
+      "Bash(*DROP DATABASE*)"
+    ]
+  },
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 -c \"import json,sys,re; d=json.load(sys.stdin); c=d.get('tool_input',{}).get('command',''); bad=re.search(r'rm\\\\s+-rf\\\\s+/($|\\\\s)|DROP\\\\s+DATABASE|git\\\\s+push.*--force', c, re.I); print(json.dumps({'decision':'block','reason':'Destructive command blocked'} ) if bad else json.dumps({}))\""
+          }
+        ]
+      }
+    ]
+  }
+}

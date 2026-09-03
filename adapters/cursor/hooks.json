@@ -1,0 +1,19 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/deny-destructive.sh",
+        "matcher": "rm\\s+-rf\\s+/|git\\s+push\\s+.*--force|DROP\\s+DATABASE|truncate\\s+table|mkfs\\.|dd\\s+if=",
+        "failClosed": true,
+        "timeout": 10
+      }
+    ],
+    "stop": [
+      {
+        "command": ".cursor/hooks/remind-verification.sh",
+        "timeout": 5
+      }
+    ]
+  }
+}

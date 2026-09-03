@@ -1,0 +1,7 @@
+services:
+  web:
+    build:
+      context: ../..
+      dockerfile: rigor-os/docker/react/Dockerfile
+    ports:
+      - "8080:8080"

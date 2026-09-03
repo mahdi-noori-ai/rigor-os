@@ -1,0 +1,15 @@
+---
+description: Root Rigor OS principles for every task
+alwaysApply: true
+---
+
+# Constitution (always)
+
+1. Match existing codebase structure and culture before writing.
+2. Completion requires evidence (lint/tests/integration as applicable).
+3. Smallest correct diff; no unrelated changes.
+4. Prefer deterministic tools over prose instructions.
+5. Never commit secrets; never skip failing tests to go green.
+6. Load skills from `.cursor/skills` / `rigor-os/skills` only when relevant.
+7. Report BLOCKED with evidence after 3 failed fix loops — never false success.
+8. Read `rigor-os/project-context/COMMANDS.md` for how to run tools.

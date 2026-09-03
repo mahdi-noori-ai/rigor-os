@@ -1,0 +1,68 @@
+openapi: 3.1.0
+info:
+  title: Project API
+  version: 1.0.0
+paths:
+  /api/v1/example/:
+    get:
+      operationId: listExample
+      security:
+        - cookieAuth: []
+      parameters:
+        - in: query
+          name: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+      responses:
+        "200":
+          description: Paginated list
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PaginatedExample"
+        "401":
+          description: Unauthenticated
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: sessionid
+  schemas:
+    PaginatedExample:
+      type: object
+      required:
+        - current
+        - page_count
+        - page_size
+        - count
+        - results
+      properties:
+        current:
+          type: integer
+        page_count:
+          type: integer
+        page_size:
+          type: integer
+        count:
+          type: integer
+        next:
+          type: ["string", "null"]
+          format: uri
+        previous:
+          type: ["string", "null"]
+          format: uri
+        results:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExampleItem"
+    ExampleItem:
+      type: object
+      required: [id]
+      properties:
+        id:
+          type: integer
+        title:
+          type: string

@@ -1,0 +1,12 @@
+---
+description: Destructive command and secret safety
+alwaysApply: true
+---
+
+# Safety
+
+- No `rm -rf /`, force-push to main, DROP DATABASE, or production data mutation without explicit user approval.
+- Do not print or commit secrets, tokens, or `.env` contents.
+- Inspect before editing; prefer smallest fix.
+- Do not install dependencies without justification.
+- Hooks may block dangerous shell — do not try to bypass.

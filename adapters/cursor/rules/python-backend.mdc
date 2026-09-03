@@ -1,0 +1,14 @@
+---
+description: Python/Django backend layering, DI, Ruff, service tests
+globs: "**/*.py"
+alwaysApply: false
+---
+
+# Python backend
+
+- Mirror sibling features (views → services/use cases → repositories).
+- If the app uses clean architecture: **no ORM in services**; use repositories + interfaces + DI.
+- Thin views; match response/pagination shapes of siblings.
+- Add/update service tests for changed services.
+- Run `ruff check` on changed Python files before finishing.
+- Full overlay: `rigor-os/skills/backend/overlays/django-clean-architecture/DjangoCleanArchSkill.md`

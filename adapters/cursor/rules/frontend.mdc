@@ -1,0 +1,14 @@
+---
+description: Frontend quality — responsive, states, design system, a11y
+globs: "**/*.{tsx,jsx,ts,css,scss}"
+alwaysApply: false
+---
+
+# Frontend
+
+- Reuse existing components and design tokens — no robotic one-off UI.
+- Loading, empty, error, disabled states required for user flows.
+- Verify mobile / tablet / desktop.
+- Semantic HTML + keyboard access for interactive UI.
+- If API changed: update types/client and verify real integration.
+- Skills: `ui-design`, `frontend` under `.cursor/skills` and `rigor-os/skills/frontend/`.
