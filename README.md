@@ -33,9 +33,9 @@ Hybrid orchestrator + on-demand skills + deterministic gates
 | Layer | Role |
 |--------|------|
 | **Constitution** | Always-on: match existing code, smallest diff, no false success |
-| **Skills** | Load only when relevant (API, Django layering, UI quality, Docker, security, migrations…) |
-| **Workflows** | Feature, bug, refactor, API change, migration, incident, release |
-| **Quality gates** | Lint/tests/contract/security/architecture — contextual, not enterprise theater |
+| **Skills** | Load only when relevant (API, Django, UI, Android/mobile game, Docker, security…) |
+| **Workflows** | Feature, bug, refactor, API change, migration, mobile/game, incident, release |
+| **Quality gates** | Lint/tests/contract/security/architecture/**mobile** — contextual, not theater |
 | **Adapters** | Same canonical docs → Cursor / Claude / Codex / Copilot |
 | **Docker starters** | Multi-stage, non-root, healthchecks — `compose up` as the easy path |
 
