@@ -62,10 +62,10 @@ Do not load the entire handbook. Load only what the current task needs:
 | Profile | Scope | Skip unless justified |
 |---------|-------|----------------------|
 | Small | MVP, bug fix, CSS tweak | E2E, perf profiling, ADRs |
-| Medium | Feature with API + UI | Full observability stack |
-| Large | Cross-service, auth overhaul | Nothing without reason |
+| Medium | Feature with API + UI/mobile | Full observability stack |
+| Large | Cross-service, auth overhaul, live game economy | Nothing without reason |
 
-Read `project-context/PROJECT_CONTEXT.md` for the project's profile.
+Read `project-context/PROJECT_CONTEXT.md` (and `MOBILE.md` for Android/games).
 
 ## When Stuck
 

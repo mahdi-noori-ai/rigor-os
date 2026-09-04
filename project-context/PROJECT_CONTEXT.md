@@ -11,7 +11,9 @@ One paragraph.
 ## Stack
 
 - Backend:
-- Frontend:
+- Frontend / Web:
+- Mobile / Android:
+- Game engine (if any):
 - Database:
 - Cache / queue:
 - Auth:

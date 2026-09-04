@@ -43,6 +43,16 @@ Each skill file already contains: Name, Domain, Purpose, Trigger, Do Not Trigger
 | `skills/git/GitHygieneSkill.md` | git-hygiene |
 | `skills/review/CodeReviewSkill.md` | code-review |
 | `skills/impact-analysis/ImpactAnalysisSkill.md` | impact-analysis |
+| `skills/mobile/AndroidAppSkill.md` | android-app |
+| `skills/mobile/MobileGameSkill.md` | mobile-game |
+| `skills/mobile/MobileApiClientSkill.md` | mobile-api-client |
+| `skills/mobile/MobileBackendApiSkill.md` | mobile-backend-api |
+| `skills/mobile/MobileUiUxSkill.md` | mobile-ui-ux |
+| `skills/mobile/MobileTestingSkill.md` | mobile-testing |
+| `skills/mobile/MobileSecuritySkill.md` | mobile-security |
+| `skills/mobile/MobileReleaseSkill.md` | mobile-release |
+| `skills/mobile/overlays/android-kotlin/AndroidKotlinOverlay.md` | android-kotlin |
+| `skills/mobile/overlays/unity-android/UnityAndroidOverlay.md` | unity-android |
 
 ## Cursor skill projections
 

@@ -18,3 +18,9 @@
 | Infinite verify loop | SafeAutonomy 3-attempt → BLOCKED |
 | Secrets in commit | safety rule + hooks |
 | New `{success,data}` envelope | API engineer + Django overlay response style |
+| Client-trusted game currency/score | `mobile-game` + `mobile-backend-api` + MobileGate |
+| Android UI happy-path only | `mobile-ui-ux` + MobileGate offline/error |
+| API DTO drift on Kotlin client | `mobile-api-client` + contract-integrity |
+| IAP grant without Play verify | `mobile-backend-api` + `mobile-security` |
+| “Works in Unity Editor” only | MobileGate device/Android build smoke |
+| Keystore committed | `mobile-release` + safety rules |

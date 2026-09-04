@@ -62,6 +62,7 @@ Reusable artifacts: ADR, feature spec, OpenAPI stub, test plan.
 | `agents/orchestrator/OrchestratorSpec.md` | How the main agent works | Feature/complex tasks | Human | Yes (via agent) |
 | `agents/security-reviewer/*` | Independent AppSec | Security-sensitive | Human | No |
 | `agents/architecture-reviewer/*` | Independent arch | Large changes | Human | No |
+| `skills/mobile/**` | Android app & game procedures | Mobile/Android/game tasks | Human | Via implementer |
 | `skills/**` | Domain procedures | Task match | Human | Via implementer |
 | `workflows/**` | Playbooks | Task type | Human | Via implementer |
 | `quality-gates/**` | Verification | Before DONE | Human | No |

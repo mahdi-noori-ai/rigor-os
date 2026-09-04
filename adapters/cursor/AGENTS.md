@@ -27,6 +27,10 @@ Follow `rigor-os/skills/backend/overlays/django-clean-architecture/DjangoCleanAr
 
 Professional UI required — reuse design tokens; reject robotic default layouts. Responsive + a11y for UI features.
 
+## Mobile / Android / games
+
+When the project is Android or a mobile game, load `rigor-os/skills/mobile/` and workflows `MobileFeature` / `MobileGameFeature`. Prefer server authority for score, currency, and IAP. Fill `project-context/MOBILE.md`. Use `MobileGate` before DONE.
+
 ## Docker
 
 Prefer `rigor-os/docker/fullstack/` for easy bring-up.

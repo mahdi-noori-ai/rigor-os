@@ -77,6 +77,9 @@ When NOT Invoked: N/A — this IS the primary agent session
 | Security-sensitive | `appsec-review`, `security-sensitive-change` |
 | Docker/infra | `docker`, `cicd` |
 | Performance issue | `performance` |
+| Android app feature | `android-app`, `mobile-api-client`, `mobile-ui-ux`, `mobile-testing` |
+| Mobile game feature | `mobile-game`, `mobile-backend-api`, `mobile-security`, engine overlay |
+| Android release | `mobile-release`, `android-release` workflow |
 
 ## Quality Gates (run before completion)
 

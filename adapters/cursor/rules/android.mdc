@@ -1,0 +1,14 @@
+---
+description: Android Kotlin/Compose/Gradle conventions — match siblings, ViewModel layering, assemble + tests
+globs: "**/*.{kt,kts},**/AndroidManifest.xml,**/res/**/*.xml"
+alwaysApply: false
+---
+
+# Android
+
+- Mirror sibling feature modules/packages, DI, navigation, and networking.
+- UI collects state; ViewModel/use case owns logic; no raw HTTP in Composables.
+- Loading / empty / error / offline states for user flows.
+- Sync API DTOs with backend OpenAPI when contracts change.
+- Run `./gradlew` lint/test/assemble as in `project-context/COMMANDS.md` or `MOBILE.md`.
+- Full skills: `rigor-os/skills/mobile/` (android-app, mobile-api-client, mobile-ui-ux).

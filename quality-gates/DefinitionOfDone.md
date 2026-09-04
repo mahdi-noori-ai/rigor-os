@@ -31,6 +31,18 @@ Completion is **contextual**. Do not force irrelevant checks onto every task. Co
 - [ ] UI matches existing design system / sibling components (not a one-off robotic layout)
 - [ ] API client/types updated if API changed
 
+## Mobile / Android (When App or Game Client Changed)
+
+- [ ] Matches existing Android/game architecture (modules, DI, navigation, engine layout)
+- [ ] Loading / empty / error / offline or reconnect states for user-facing flows
+- [ ] Touch-first UI or readable HUD; no desktop-only layout
+- [ ] Debug build assembles; smoke on emulator/device for the feature
+- [ ] Unit tests for new ViewModels, use cases, or game rules
+- [ ] API DTOs synced with backend if contract changed
+- [ ] No secrets/keystores in the diff; release logging safe
+- [ ] Games: server authority for score/currency/IAP when online services exist
+- [ ] `MobileGate` checklist completed
+
 ## Integration (When Frontend + Backend)
 
 - [ ] Real request/response verified (not mock-only)

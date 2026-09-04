@@ -102,7 +102,7 @@ Images are **multi-stage**, run as **non-root**, and include **healthchecks**. A
 rigor-os/
 ├── constitution/      # L1 kernel (~800 tokens)
 ├── agents/            # Orchestrator + review specs
-├── skills/            # Backend, frontend/UI, API, DB, security, Docker…
+├── skills/            # Backend, frontend/UI, mobile/Android/game, API, DB, security, Docker…
 ├── workflows/         # Feature, bug, API change, migration, hotfix…
 ├── quality-gates/     # DoD, testing, security, architecture, contracts
 ├── adapters/          # Cursor, Claude, Codex, Copilot
@@ -111,7 +111,25 @@ rigor-os/
 └── research/          # Why this architecture (cited)
 ```
 
-Technology-agnostic **core**, with a **Django clean-architecture overlay** (layered apps, DI, ORM-free services, Ruff, service tests) and **UI design** skills so screens are not generic AI chrome.
+Technology-agnostic **core**, with a **Django clean-architecture overlay**, **UI design** skills, and a full **Android / mobile game** domain (client structure, server-authoritative game APIs, release).
+
+---
+
+## Mobile & Android games
+
+Rigor OS also covers **Android apps** and **mobile games** that talk to your backend:
+
+| Area | What you get |
+|------|----------------|
+| Client | `skills/mobile/` — Android structure, Compose/Kotlin overlay, UI/UX, testing, security, Play release |
+| Game | Server-authoritative score/currency/IAP, HUD vs sim separation, Unity/Godot overlays |
+| Backend | `mobile-backend-api` — mobile-friendly contracts, idempotent rewards, push tokens, force-update |
+| Workflows | `MobileFeature`, `MobileGameFeature`, `AndroidRelease` |
+| Gates | `MobileGate` + extended DoD / matrix columns |
+
+Example walkthrough: [Mobile game leaderboard](examples/MobileGameLeaderboardFeature.md).
+
+Fill [`project-context/MOBILE.md`](project-context/MOBILE.md) after bootstrap when Gradle/Unity/Godot is detected.
 
 ---
 
@@ -150,6 +168,8 @@ Set the profile in [`project-context/PROJECT_CONTEXT.md`](project-context/PROJEC
 | [Quality gate matrix](quality-gates/QualityGateMatrix.md) | Which gates apply to which change |
 | [Cursor adapter](adapters/cursor/ADAPTER_GUIDE.md) | `.cursor/rules`, skills, hooks |
 | [Example: user profile](examples/UserProfileFeature.md) | End-to-end walkthrough |
+| [Example: mobile game + API](examples/MobileGameLeaderboardFeature.md) | Android/game + Django rewards/leaderboard |
+| [Mobile gate](quality-gates/MobileGate.md) | Android/game completion checks |
 | [Failure scenarios](examples/FailureScenarios.md) | How vibe-coding failures get caught |
 
 ---

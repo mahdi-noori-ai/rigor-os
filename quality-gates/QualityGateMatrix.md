@@ -2,23 +2,26 @@
 
 **M** = mandatory · **O** = optional / when relevant · **—** = skip
 
-| Gate | Tiny UI | Bug fix | Backend service | API change | FE+BE feature | Migration | Auth/security | Perf work | Release | Docs only |
-|------|---------|---------|-----------------|------------|---------------|-----------|---------------|-----------|---------|-----------|
-| Lint / format | M | M | M | M | M | M | M | M | M | O |
-| Typecheck | O | O | O | M | M | — | O | O | M | — |
-| Unit tests | — | M | M | M | M | O | M | O | M | — |
-| Integration tests | — | O | O | M | M | M | M | O | M | — |
-| Contract / OpenAPI | — | — | O | M | M | — | O | — | M | — |
-| E2E | — | — | — | O | O | — | O | — | O | — |
-| SecurityGate | — | O | O | O | O | — | M | — | O | — |
-| ArchitectureGate | — | — | M | M | M | O | M | — | — | — |
-| IntegrationVerification | — | — | — | M | M | — | O | — | O | — |
-| Migration review | — | — | — | — | O | M | — | — | O | — |
-| Responsive UI | M | O | — | — | M | — | — | O | O | — |
-| Accessibility | O | — | — | — | M | — | — | — | O | — |
-| Performance | — | — | O | — | O | O | — | M | O | — |
-| Observability | — | O | O | O | O | — | O | O | O | — |
-| Documentation | — | O | O | M | O | O | O | — | M | M |
-| Deployment impact | — | — | — | O | O | M | O | — | M | — |
+| Gate | Tiny UI | Bug fix | Backend service | API change | FE+BE feature | Migration | Auth/security | Perf work | Release | Docs only | Android feature | Mobile game feature | Android release |
+|------|---------|---------|-----------------|------------|---------------|-----------|---------------|-----------|---------|-----------|-----------------|---------------------|-----------------|
+| Lint / format | M | M | M | M | M | M | M | M | M | O | M | M | M |
+| Typecheck | O | O | O | M | M | — | O | O | M | — | O | O | O |
+| Unit tests | — | M | M | M | M | O | M | O | M | — | M | M | O |
+| Integration tests | — | O | O | M | M | M | M | O | M | — | O | O | O |
+| Contract / OpenAPI | — | — | O | M | M | — | O | — | M | — | O | O | — |
+| E2E / device smoke | — | — | — | O | O | — | O | — | O | — | M | M | M |
+| SecurityGate | — | O | O | O | O | — | M | — | O | — | O | O | O |
+| ArchitectureGate | — | — | M | M | M | O | M | — | — | — | M | M | — |
+| IntegrationVerification | — | — | — | M | M | — | O | — | O | — | M* | M* | — |
+| Migration review | — | — | — | — | O | M | — | — | O | — | — | — | — |
+| Responsive / touch UI | M | O | — | — | M | — | — | O | O | — | M | M | O |
+| Accessibility | O | — | — | — | M | — | — | — | O | — | O | — | — |
+| Performance | — | — | O | — | O | O | — | M | O | — | O | O | O |
+| Observability | — | O | O | O | O | — | O | O | O | — | O | O | O |
+| Documentation | — | O | O | M | O | O | O | — | M | M | O | O | M |
+| Deployment impact | — | — | — | O | O | M | O | — | M | — | — | — | M |
+| **MobileGate** | — | O | — | O | — | — | O | — | O | — | **M** | **M** | **M** |
 
-Profile **Small** may downgrade E2E and Observability to —. Profile **Large** upgrades E2E to M for user-facing features.
+\* When the change includes backend ↔ client API.
+
+Profile **Small** may downgrade instrumented E2E to device smoke only. Profile **Large** upgrades instrumented tests to M for critical mobile flows.

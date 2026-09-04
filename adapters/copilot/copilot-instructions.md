@@ -8,4 +8,5 @@ Follow `rigor-os/` governance.
 - Prefer project commands from `rigor-os/project-context/COMMANDS.md`.
 - For Django layered apps: no ORM in services; repositories + DI; Ruff; service tests.
 - For UI: reuse design system; responsive; loading/empty/error states; professional look.
-- For API changes: update schema and frontend types; verify integration.
+- For API changes: update schema and frontend/mobile types; verify integration.
+- For Android/mobile games: match app architecture; server-authoritative score/currency/IAP; MobileGate + device smoke.

@@ -10,7 +10,8 @@ Governed by `rigor-os/`.
 6. FE+BE: verify real API integration.
 7. Django layered: no ORM in services; DI; Ruff; service tests.
 8. UI: professional, responsive, reuse design system.
-9. Destructive ops require approval.
-10. After 3 failed loops → BLOCKED.
+9. Android/game: skills/mobile, server-side economy/IAP, MobileGate.
+10. Destructive ops require approval.
+11. After 3 failed loops → BLOCKED.
 
-See `rigor-os/project-context/COMMANDS.md` and `constitution/CONSTITUTION.md`.
+See `rigor-os/project-context/COMMANDS.md`, `MOBILE.md` if present, and `constitution/CONSTITUTION.md`.
