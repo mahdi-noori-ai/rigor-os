@@ -234,6 +234,49 @@ _score, currency, IAP — fill_
 """
         (pc / "MOBILE.md").write_text(mobile, encoding="utf-8")
 
+    has_stack = bool(info.get("backend") or info.get("frontend") or info.get("mobile"))
+    stack_path = pc / "STACK_DECISION.md"
+    if not has_stack:
+        stack_path.write_text(
+            """# Stack Decision
+
+## Status
+
+**No stack detected.** Run skill `stack-selection` / workflow `StackSelection`:
+classify project type (web, mobile-game, llm-app, …) and apply
+`standards/DefaultStackMatrix.md`. Then fill this file.
+
+## Project type
+
+_pending_
+
+## Chosen stack
+
+_pending_
+
+## Rationale
+
+_pending_
+""",
+            encoding="utf-8",
+        )
+    elif not stack_path.exists():
+        stack_path.write_text(
+            f"""# Stack Decision
+
+## Status
+
+Existing stack detected — **do not re-select**.
+
+- Backend: {", ".join(info.get("backend") or ["—"])}
+- Frontend / Web: {", ".join(info.get("frontend") or ["—"])}
+- Mobile: {", ".join(info.get("mobile") or ["—"])}
+
+Match sibling patterns. See `skills/architecture/StackSelectionSkill.md`.
+""",
+            encoding="utf-8",
+        )
+
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Bootstrap Rigor OS project context")
@@ -245,6 +288,11 @@ def main() -> None:
     write_context(root, info)
     print(f"Wrote project-context under {pc}")
     print(f"Detected: {json.dumps(info, indent=2)}")
+    if not (info.get("backend") or info.get("frontend") or info.get("mobile")):
+        print(
+            "HINT: No stack detected — use rigor-os stack-selection "
+            "(standards/DefaultStackMatrix.md) before scaffolding."
+        )
 
 
 if __name__ == "__main__":
