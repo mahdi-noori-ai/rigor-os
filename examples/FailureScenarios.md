@@ -24,3 +24,5 @@
 | IAP grant without Play verify | `mobile-backend-api` + `mobile-security` |
 | “Works in Unity Editor” only | MobileGate device/Android build smoke |
 | Keystore committed | `mobile-release` + safety rules |
+| Agent bikesheds React vs Vue vs Svelte | `stack-selection` + DefaultStackMatrix (pick default, allow one-line override) |
+| Agent rewrites Django app to FastAPI unsolicited | Constitution: existing stack wins |

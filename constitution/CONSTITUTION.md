@@ -57,6 +57,12 @@ Do not load the entire handbook. Load only what the current task needs:
 - L3: Full skill body (when task matches)
 - L4: References/templates (when skill requests)
 
+## Principle 7: Stack — Existing First, Then Smart Defaults
+
+1. If the repository already has a stack → **match it** (never replace unsolicited).
+2. If the user named a stack → use it.
+3. If neither → classify project type (web, mobile game, LLM, …) and apply `standards/DefaultStackMatrix.md` via `stack-selection`. Record the choice in `project-context/STACK_DECISION.md` and allow a one-line override.
+
 ## Project Size Awareness
 
 | Profile | Scope | Skip unless justified |

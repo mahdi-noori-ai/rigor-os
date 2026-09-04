@@ -80,6 +80,7 @@ When NOT Invoked: N/A — this IS the primary agent session
 | Android app feature | `android-app`, `mobile-api-client`, `mobile-ui-ux`, `mobile-testing` |
 | Mobile game feature | `mobile-game`, `mobile-backend-api`, `mobile-security`, engine overlay |
 | Android release | `mobile-release`, `android-release` workflow |
+| Greenfield / no stack named | `stack-selection`, `StackSelection` workflow, then bootstrap |
 
 ## Quality Gates (run before completion)
 

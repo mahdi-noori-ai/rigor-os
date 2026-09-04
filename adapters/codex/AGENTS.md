@@ -11,7 +11,8 @@ Governed by `rigor-os/`.
 7. Django layered: no ORM in services; DI; Ruff; service tests.
 8. UI: professional, responsive, reuse design system.
 9. Android/game: skills/mobile, server-side economy/IAP, MobileGate.
-10. Destructive ops require approval.
-11. After 3 failed loops → BLOCKED.
+10. Greenfield/no stack: stack-selection defaults; existing repo stack always wins.
+11. Destructive ops require approval.
+12. After 3 failed loops → BLOCKED.
 
 See `rigor-os/project-context/COMMANDS.md`, `MOBILE.md` if present, and `constitution/CONSTITUTION.md`.

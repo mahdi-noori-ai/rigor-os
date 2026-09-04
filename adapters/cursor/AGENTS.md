@@ -31,6 +31,10 @@ Professional UI required — reuse design tokens; reject robotic default layouts
 
 When the project is Android or a mobile game, load `rigor-os/skills/mobile/` and workflows `MobileFeature` / `MobileGameFeature`. Prefer server authority for score, currency, and IAP. Fill `project-context/MOBILE.md`. Use `MobileGate` before DONE.
 
+## Stack selection
+
+If there is **no existing stack** and the user did not name one, run `stack-selection` (`standards/DefaultStackMatrix.md`): pick web/mobile/game/LLM defaults, write `STACK_DECISION.md`, then build. Never override an existing repo stack.
+
 ## Docker
 
 Prefer `rigor-os/docker/fullstack/` for easy bring-up.

@@ -53,6 +53,7 @@ Each skill file already contains: Name, Domain, Purpose, Trigger, Do Not Trigger
 | `skills/mobile/MobileReleaseSkill.md` | mobile-release |
 | `skills/mobile/overlays/android-kotlin/AndroidKotlinOverlay.md` | android-kotlin |
 | `skills/mobile/overlays/unity-android/UnityAndroidOverlay.md` | unity-android |
+| `skills/architecture/StackSelectionSkill.md` | stack-selection |
 
 ## Cursor skill projections
 

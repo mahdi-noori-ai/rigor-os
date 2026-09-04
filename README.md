@@ -133,6 +133,21 @@ Fill [`project-context/MOBILE.md`](project-context/MOBILE.md) after bootstrap wh
 
 ---
 
+## Automatic stack selection
+
+If you say *“build a web app”* or *“build a mobile game”* **without** naming Django/React/Unity/etc., and the repo has no stack yet, Rigor OS:
+
+1. Classifies project type (web, Android, game, LLM, …)
+2. Applies opinionated defaults from [`standards/DefaultStackMatrix.md`](standards/DefaultStackMatrix.md) (Django+DRF, React/Next, PostgreSQL, Compose, Kotlin/Unity, Python for LLM, …)
+3. Writes [`project-context/STACK_DECISION.md`](project-context/STACK_DECISION.md)
+4. Continues bootstrap / implementation
+
+**Existing code always wins.** Explicit user stack always wins. You can override in one sentence.
+
+Skill: [`stack-selection`](skills/architecture/StackSelectionSkill.md) · Workflow: [`StackSelection`](workflows/StackSelection.md)
+
+---
+
 ## Design principles
 
 1. Match the existing codebase before inventing a style  
@@ -170,6 +185,7 @@ Set the profile in [`project-context/PROJECT_CONTEXT.md`](project-context/PROJEC
 | [Example: user profile](examples/UserProfileFeature.md) | End-to-end walkthrough |
 | [Example: mobile game + API](examples/MobileGameLeaderboardFeature.md) | Android/game + Django rewards/leaderboard |
 | [Mobile gate](quality-gates/MobileGate.md) | Android/game completion checks |
+| [Default stack matrix](standards/DefaultStackMatrix.md) | Languages/frameworks when you don’t specify |
 | [Failure scenarios](examples/FailureScenarios.md) | How vibe-coding failures get caught |
 
 ---
