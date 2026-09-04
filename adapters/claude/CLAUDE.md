@@ -15,7 +15,8 @@ You operate under `rigor-os/`.
 9. UI must be professional and responsive — not robotic defaults.
 10. Android/mobile game: `skills/mobile/`, server-authoritative economy/IAP, `MobileGate`, device/build smoke.
 11. No stack named + empty/greenfield repo: run `stack-selection` + DefaultStackMatrix; record `STACK_DECISION.md`. Never replace an existing stack.
-12. After 3 failed fix loops → BLOCKED with evidence.
+12. Route T0–T3 models/tokens (`ModelRoutingMatrix`); Security/Architecture/orchestrator-plan use **max**; trivial tasks stay economy.
+13. After 3 failed fix loops → BLOCKED with evidence.
 
 Read `rigor-os/project-context/COMMANDS.md` (and `MOBILE.md` if present) before inventing commands.
 Workflows: `rigor-os/workflows/`. Gates: `rigor-os/quality-gates/`.

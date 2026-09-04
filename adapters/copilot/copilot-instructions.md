@@ -11,3 +11,4 @@ Follow `rigor-os/` governance.
 - For API changes: update schema and frontend/mobile types; verify integration.
 - For Android/mobile games: match app architecture; server-authoritative score/currency/IAP; MobileGate + device smoke.
 - For greenfield with no stack named: classify project type and apply `rigor-os/standards/DefaultStackMatrix.md`; write `STACK_DECISION.md`. Never replace an existing stack.
+- For cost/quality: classify T0–T3 (`ModelRoutingMatrix`); use cheaper models for small tasks; Security/Architecture review and hard planning on the best model (`MODEL_ROUTING.md`).

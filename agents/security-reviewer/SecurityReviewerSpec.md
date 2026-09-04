@@ -48,6 +48,10 @@ blocked: true | false
 - Run security scanners if available (bandit, pip-audit, npm audit)
 - Review OpenAPI schema
 
+## Model tier
+
+Always **max** (`project-context/MODEL_ROUTING.md`). Do not run this agent on T0/T1 tasks without a security surface.
+
 ## Allowed Actions
 
 - Read any project file

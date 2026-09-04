@@ -47,6 +47,10 @@ adr_recommended: true | false
 - Grep/search codebase
 - Dependency analysis (import tracing)
 
+## Model tier
+
+Always **max** (`project-context/MODEL_ROUTING.md`). Skip for T0/T1 sibling fixes with no new boundaries.
+
 ## Allowed Actions
 
 - Read any project file

@@ -81,6 +81,18 @@ When NOT Invoked: N/A — this IS the primary agent session
 | Mobile game feature | `mobile-game`, `mobile-backend-api`, `mobile-security`, engine overlay |
 | Android release | `mobile-release`, `android-release` workflow |
 | Greenfield / no stack named | `stack-selection`, `StackSelection` workflow, then bootstrap |
+| Every session / cost control | `token-model-routing`, `TaskRouting` — T0–T3; leads @ max |
+
+## Model routing (mandatory habit)
+
+Before substantial work, emit one line:
+
+```text
+Routing: T2 | implementer=strong | reviewers=security@max | skills≤3
+```
+
+Read aliases from `project-context/MODEL_ROUTING.md`.  
+Security + Architecture reviewers always bind to **max**. Trivial T0 work never uses max when economy exists.
 
 ## Quality Gates (run before completion)
 

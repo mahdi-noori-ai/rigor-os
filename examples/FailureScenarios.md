@@ -26,3 +26,6 @@
 | Keystore committed | `mobile-release` + safety rules |
 | Agent bikesheds React vs Vue vs Svelte | `stack-selection` + DefaultStackMatrix (pick default, allow one-line override) |
 | Agent rewrites Django app to FastAPI unsolicited | Constitution: existing stack wins |
+| Flagship model used for a typo | `token-model-routing` + ModelRoutingMatrix T0→economy |
+| Security review skipped “to save tokens” on IAP | Reviewers required @ max when security surface |
+| Architecture Reviewer on CSS padding | TaskRouting: no reviewers on T0 |

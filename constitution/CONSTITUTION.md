@@ -63,6 +63,14 @@ Do not load the entire handbook. Load only what the current task needs:
 2. If the user named a stack → use it.
 3. If neither → classify project type (web, mobile game, LLM, …) and apply `standards/DefaultStackMatrix.md` via `stack-selection`. Record the choice in `project-context/STACK_DECISION.md` and allow a one-line override.
 
+## Principle 8: Route Models & Tokens by Task Weight
+
+1. Classify each task **T0–T3** (`standards/ModelRoutingMatrix.md`) before deep work.
+2. **T0/T1** → economy/standard models and minimal skills/gates — never flagship spend for typos.
+3. **Leads use max:** orchestrator planning for Medium+ work, Security Reviewer, Architecture Reviewer → highest configured model (`project-context/MODEL_ROUTING.md`).
+4. Do not spawn review agents on trivial tasks; escalate tier only after failed verify loops.
+5. Prefer tools over extra LLM passes.
+
 ## Project Size Awareness
 
 | Profile | Scope | Skip unless justified |

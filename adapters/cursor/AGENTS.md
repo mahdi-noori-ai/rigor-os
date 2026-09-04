@@ -35,6 +35,10 @@ When the project is Android or a mobile game, load `rigor-os/skills/mobile/` and
 
 If there is **no existing stack** and the user did not name one, run `stack-selection` (`standards/DefaultStackMatrix.md`): pick web/mobile/game/LLM defaults, write `STACK_DECISION.md`, then build. Never override an existing repo stack.
 
+## Token & model routing
+
+Classify **T0–T3** every task (`standards/ModelRoutingMatrix.md`). Fill `project-context/MODEL_ROUTING.md` with real model IDs. **Leads (planning, Security/Architecture review) use `max`.** Trivial edits use `economy`/`standard` and minimal skills — do not burn flagship models on typos.
+
 ## Docker
 
 Prefer `rigor-os/docker/fullstack/` for easy bring-up.

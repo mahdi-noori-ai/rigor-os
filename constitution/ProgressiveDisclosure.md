@@ -39,6 +39,19 @@ Context efficiency strategy for AI coding agents. Minimize always-loaded tokens;
 3. Unload skill context when switching to a different domain.
 4. Prefer deterministic tools over loading a skill for verification.
 
+## Model tier coupling
+
+Combine with `standards/ModelRoutingMatrix.md`:
+
+| Task tier | Context | Model alias |
+|-----------|---------|-------------|
+| T0 | L1 only (+ tiny edit) | economy |
+| T1 | L1 + 1–2 skills | standard |
+| T2 | L1 + ≤3 skills + gates | strong |
+| T3 plan/review | L1 + targeted skills + reviewers | **max** |
+
+Do not load L4 references on T0/T1.
+
 ## Tool-Specific Mapping
 
 ### Cursor

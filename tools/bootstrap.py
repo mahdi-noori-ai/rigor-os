@@ -129,7 +129,7 @@ _Describe the product in one paragraph._
 - Auth: _fill in_
 - Docker: {"yes" if info["docker"] else "no"}
 - CI: {", ".join(info["ci"]) or "none detected"}
-
+- Model routing: see MODEL_ROUTING.md (T0–T3 → economy/standard/strong/max)
 ## Repository layout
 
 _Fill module map after first exploration._

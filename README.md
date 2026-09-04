@@ -148,6 +148,24 @@ Skill: [`stack-selection`](skills/architecture/StackSelectionSkill.md) · Workfl
 
 ---
 
+## Token & model management
+
+Rigor OS decides **how heavy** each task should be:
+
+| Tier | Examples | Model | Reviewers |
+|------|----------|-------|-----------|
+| **T0** | Typo, rename, tiny CSS | Economy | None |
+| **T1** | Single-module bug/feature | Standard | Rarely |
+| **T2** | API + client, migrations | Strong | Security if auth |
+| **T3** | Architecture, incidents, hard design | **Max** | Security/Arch @ **max** |
+
+Per-project model IDs: [`project-context/MODEL_ROUTING.md`](project-context/MODEL_ROUTING.md).  
+Policy: [`standards/ModelRoutingMatrix.md`](standards/ModelRoutingMatrix.md) · Skill: [`token-model-routing`](skills/architecture/TokenModelRoutingSkill.md).
+
+Orchestrator/planning and review **leads** use the highest tier; low tasks must not.
+
+---
+
 ## Design principles
 
 1. Match the existing codebase before inventing a style  
@@ -186,6 +204,7 @@ Set the profile in [`project-context/PROJECT_CONTEXT.md`](project-context/PROJEC
 | [Example: mobile game + API](examples/MobileGameLeaderboardFeature.md) | Android/game + Django rewards/leaderboard |
 | [Mobile gate](quality-gates/MobileGate.md) | Android/game completion checks |
 | [Default stack matrix](standards/DefaultStackMatrix.md) | Languages/frameworks when you don’t specify |
+| [Model routing matrix](standards/ModelRoutingMatrix.md) | T0–T3 models & who uses max |
 | [Failure scenarios](examples/FailureScenarios.md) | How vibe-coding failures get caught |
 
 ---

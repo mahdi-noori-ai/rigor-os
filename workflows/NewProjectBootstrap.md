@@ -8,11 +8,15 @@ Initialize a new repository with this OS and project-specific context.
 Detect existing stack OR run Stack Selection (if none / user silent)
     → Copy rigor-os into repo (if not already)
     → Run tools/bootstrap.py (Django, Node, Android/Gradle, Unity, Godot)
-    → Fill PROJECT_CONTEXT, COMMANDS, ARCHITECTURE, MOBILE, STACK_DECISION
+    → Fill PROJECT_CONTEXT, COMMANDS, ARCHITECTURE, MOBILE, STACK_DECISION, MODEL_ROUTING
     → Install adapter (Cursor first)
     → Optional: copy docker templates for chosen stack
     → Verify agent can run lint/test/assemble commands
 ```
+
+## Model routing setup
+
+On bootstrap, ensure `project-context/MODEL_ROUTING.md` maps `economy` / `standard` / `strong` / `max` to real Cursor/Claude/Codex model IDs. Leads and reviewers use **max**; trivial tasks use **economy**.
 
 ## Stack when user is silent
 
@@ -46,6 +50,7 @@ Ask the user only for what cannot be inferred (deployment target, profile size, 
 - `project-context/ARCHITECTURE.md`
 - `project-context/MOBILE.md` (when mobile detected)
 - `project-context/STACK_DECISION.md` (when stack was chosen or N/A)
+- `project-context/MODEL_ROUTING.md` (tier → model IDs)
 - Adapter files in `.cursor/` (or CLAUDE.md / AGENTS.md)
 
 ## Docker
