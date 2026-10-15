@@ -1,0 +1,8 @@
+target
+.git
+.github
+bench
+python
+docs
+**/*.md
+!README.md
