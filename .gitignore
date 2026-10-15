@@ -4,3 +4,8 @@ tmp/*
 __pycache__/
 .env
 .env.local
+.venv/
+.pytest_cache/
+.ruff_cache/
+uv.lock
+*.bak
