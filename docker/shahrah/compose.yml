@@ -1,5 +1,5 @@
 # shahrah — region-aware PostgreSQL proxy (pooling, read/write split, geo-sharding).
-# Fork: https://github.com/mahdi-noori-ai/shahrah  (upstream: rs-alireza/shahrah)
+# Source lives in this repo at rigor-os/shahrah/ (git subtree of rs-alireza/shahrah, MIT).
 #
 # Single-region quick start (pass-through + pooling, no topology file):
 #   cp rigor-os/docker/shahrah/.env.example .env.shahrah   # set both passwords
@@ -31,7 +31,7 @@ services:
 
   shahrah:
     build:
-      context: https://github.com/mahdi-noori-ai/shahrah.git#main
+      context: ../../shahrah   # rigor-os/shahrah — built from the bundled source, no network clone
     environment:
       SHAHRAH_LISTEN: 0.0.0.0:6432
       SHAHRAH_BACKEND: db:5432

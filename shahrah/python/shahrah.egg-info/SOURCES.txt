@@ -1,0 +1,11 @@
+pyproject.toml
+shahrah/__init__.py
+shahrah/console.py
+shahrah/hints.py
+shahrah/pool.py
+shahrah.egg-info/PKG-INFO
+shahrah.egg-info/SOURCES.txt
+shahrah.egg-info/dependency_links.txt
+shahrah.egg-info/requires.txt
+shahrah.egg-info/top_level.txt
+tests/test_hints.py
