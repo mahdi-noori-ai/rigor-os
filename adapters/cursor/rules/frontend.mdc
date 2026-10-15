@@ -11,4 +11,4 @@ alwaysApply: false
 - Verify mobile / tablet / desktop.
 - Semantic HTML + keyboard access for interactive UI.
 - If API changed: update types/client and verify real integration.
-- Skills: `ui-design`, `frontend` under `.cursor/skills` and `rigor-os/skills/frontend/`.
+- Skills: `ui-design`, `seo-context` (public routes) under `.cursor/skills` and `rigor-os/skills/frontend/`.

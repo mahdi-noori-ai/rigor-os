@@ -1,5 +1,17 @@
-# Example Codex project config — merge carefully with user settings
-# project_doc_max_bytes = 65536
+# Rigor OS — example project config for OpenAI Codex (.codex/config.toml).
+# Merge with your own settings; project config loads only after you trust the folder.
+
+# Root AGENTS.md is kept small on purpose; raise only if nested AGENTS.md get truncated.
+# project_doc_max_bytes = 32768
 
 [features]
+# Hooks are on by default; listed so the dependency on .codex/hooks.json is explicit.
 hooks = true
+
+# MCP servers: declare only what the current project needs (see skills/ai/MCPGovernanceSkill.md).
+# Pin versions, pass secrets through env, and prefer read-only tools.
+#
+# [mcp_servers.postgres-readonly]
+# command = "uvx"
+# args = ["postgres-mcp@0.3.0", "--access-mode=restricted"]
+# env = { DATABASE_URI = "${DATABASE_URL_READONLY}" }

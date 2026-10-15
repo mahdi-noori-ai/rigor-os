@@ -1,3 +1,4 @@
+<!-- rigor-os:template — bootstrap.py replaces this file until you edit it -->
 # Commands
 
 Replace after bootstrap. Agents must use these, not invent.

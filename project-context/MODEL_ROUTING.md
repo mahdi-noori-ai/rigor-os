@@ -11,12 +11,12 @@ Agents read this file; they must not invent spendier models than configured.
 
 ## Aliases (edit me)
 
-| Alias | Cursor | Claude Code | Codex / other | Notes |
-|-------|--------|-------------|---------------|-------|
-| economy | _e.g. fast/composer-small_ | _e.g. haiku_ | _default-fast_ | T0 |
-| standard | _default agent_ | _sonnet_ | _default_ | T1 |
-| strong | _strong agent_ | _sonnet_ | _default_ | T2 |
-| max | _best / thinking_ | _opus / best_ | _best_ | T3 leads & reviewers |
+| Alias | Cursor | Claude Code (model · effort) | Codex / other | Notes |
+|-------|--------|------------------------------|---------------|-------|
+| economy | _e.g. fast/composer-small_ | _haiku · low_ | _default-fast · low_ | T0 |
+| standard | _default agent_ | _sonnet · medium_ | _default · medium_ | T1 |
+| strong | _strong agent_ | _sonnet · high_ | _default · high_ | T2 |
+| max | _best / thinking_ | _opus · xhigh_ | _best · high_ | T3 leads & reviewers |
 
 If a cell is empty, use the next lower alias that is set; if only `max` exists, still enforce **context budgets** by tier.
 
@@ -30,6 +30,8 @@ If a cell is empty, use the next lower alias that is set; if only `max` exists, 
 | Orchestrator plan Medium+ | max |
 | Security Reviewer | max |
 | Architecture Reviewer | max |
+| SEO Strategist (route specs) | strong |
+| SEO Strategist (launch / positioning / multi-locale) | max |
 
 ## Session notes
 

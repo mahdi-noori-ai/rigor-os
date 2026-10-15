@@ -1,3 +1,4 @@
+<!-- rigor-os:template — bootstrap.py replaces this file until you edit it -->
 # Stack Decision
 
 _Filled by the agent when starting a greenfield project or when no stack is detected. If this repo already has a stack, leave unused or note “existing stack — N/A”._
