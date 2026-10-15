@@ -19,10 +19,12 @@ LIMIT = 9000
 
 def render(plugin_root: Path, project: Path) -> str:
     kernel = (plugin_root / "adapters" / "claude" / "CLAUDE.md").read_text(encoding="utf-8")
-    kernel = kernel.replace(
-        "You operate under `rigor-os/`.", f"Rigor OS is installed as a plugin at `{plugin_root.as_posix()}`."
-    )
-    kernel = re.sub(r"rigor-os/(?!project-context)", f"{plugin_root.as_posix()}/", kernel)
+    # Substitute through a placeholder: install paths such as
+    # ~/.claude/plugins/cache/rigor-os/rigor-os/1.2.0 contain "rigor-os/" themselves.
+    marker = "\x00PLUGIN_ROOT\x00"
+    kernel = kernel.replace("You operate under `rigor-os/`.", f"Rigor OS is installed as a plugin at `{marker}`.")
+    kernel = re.sub(r"rigor-os/(?!project-context)", f"{marker}/", kernel)
+    kernel = kernel.replace(marker, plugin_root.as_posix())
 
     context = project / "rigor-os" / "project-context"
     if (context / "PROJECT_CONTEXT.md").exists():

@@ -107,6 +107,20 @@ def test_session_kernel_output(tmp_path):
     assert "Project context: `rigor-os/project-context/`" in out
 
 
+def test_session_kernel_with_cache_shaped_install_path(tmp_path):
+    sys.path.insert(0, str(ROOT / "adapters" / "hooks"))
+    import session_kernel
+
+    plugin_root = tmp_path / "plugins" / "cache" / "rigor-os" / "rigor-os" / "1.2.0"
+    (plugin_root / "adapters" / "claude").mkdir(parents=True)
+    shutil.copy(ROOT / "adapters" / "claude" / "CLAUDE.md", plugin_root / "adapters" / "claude" / "CLAUDE.md")
+    out = session_kernel.render(plugin_root, tmp_path / "project")
+    root = plugin_root.as_posix()
+    assert f"installed as a plugin at `{root}`" in out
+    assert f"`{root}/workflows/`" in out
+    assert root + root not in out and f"{root}/{root.lstrip('/')}" not in out
+
+
 def test_bootstrap_prefix_for_each_layout(tmp_path):
     assert bootstrap.os_prefix(tmp_path, tmp_path / "rigor-os") == "rigor-os/"
     assert bootstrap.os_prefix(tmp_path, tmp_path) == ""
