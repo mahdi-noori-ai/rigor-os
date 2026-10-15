@@ -24,9 +24,11 @@ jobs:
       - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           persist-credentials: false
-      - name: Toolchain and native deps
+      - name: Toolchain (workspace MSRV) and native deps
         run: |
-          rustup toolchain install stable --profile minimal --component clippy,rustfmt
+          # Match rust-version in Cargo.toml so new stable-only lints do not break CI.
+          rustup toolchain install 1.95 --profile minimal --component clippy,rustfmt
+          rustup default 1.95
           sudo apt-get update && sudo apt-get install -y --no-install-recommends protobuf-compiler libclang-dev
       - uses: Swatinem/rust-cache@6323deb102c322ba6fcbdcafc7e3dddab59af2b6 # v2.9.2
       - name: rustfmt (advisory — upstream style is not rustfmt-normalised yet)
