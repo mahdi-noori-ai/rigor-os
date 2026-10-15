@@ -3,8 +3,7 @@
   "hooks": {
     "beforeShellExecution": [
       {
-        "command": ".cursor/hooks/deny-destructive.sh",
-        "matcher": "rm\\s+-rf\\s+/|git\\s+push\\s+.*--force|DROP\\s+DATABASE|truncate\\s+table|mkfs\\.|dd\\s+if=",
+        "command": "python3 .cursor/hooks/guard_shell.py",
         "failClosed": true,
         "timeout": 10
       }

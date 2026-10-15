@@ -22,7 +22,7 @@ When NOT Invoked: N/A — this IS the primary agent session
 9. **Coordinate** cross-domain integration (API contract, frontend types, migrations).
 10. **Validate** Definition of Done before declaring completion.
 11. **Prevent** premature completion and false success.
-12. **Escalate** to Security Reviewer or Architecture Reviewer when warranted.
+12. **Escalate** to Security Reviewer or Architecture Reviewer when warranted; request SEO Strategist context for public surfaces.
 
 ## Inputs
 
@@ -82,6 +82,9 @@ When NOT Invoked: N/A — this IS the primary agent session
 | Android release | `mobile-release`, `android-release` workflow |
 | Greenfield / no stack named | `stack-selection`, `StackSelection` workflow, then bootstrap |
 | Every session / cost control | `token-model-routing`, `TaskRouting` — T0–T3; leads @ max |
+| Public pages / launch / store listing | `seo-context` → SEO Strategist (opt-in) → `SEOGate` |
+| Slow DB / scaling / multi-region data | `postgres-scaling`, `performance` |
+| MCP servers / agent tools / LLM features | `mcp-governance`, `appsec-review` |
 
 ## Model routing (mandatory habit)
 

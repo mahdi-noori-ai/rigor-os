@@ -21,7 +21,10 @@
 | Documentation | — | O | O | M | O | O | O | — | M | M | O | O | M |
 | Deployment impact | — | — | — | O | O | M | O | — | M | — | — | — | M |
 | **MobileGate** | — | O | — | O | — | — | O | — | O | — | **M** | **M** | **M** |
+| **SEOGate**† | O | — | — | — | M† | — | — | O | M† | O | — | — | O‡ |
+| Supply chain (deps/CI pinning) | — | O | O | O | O | — | M | — | M | — | O | O | M |
 
 \* When the change includes backend ↔ client API.
+† Only for public, indexable web routes (skip auth-only/internal apps). ‡ Store-listing ASO for Play releases.
 
 Profile **Small** may downgrade instrumented E2E to device smoke only. Profile **Large** upgrades instrumented tests to M for critical mobile flows.

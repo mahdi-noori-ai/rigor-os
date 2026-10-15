@@ -1,0 +1,12 @@
+---
+description: Public page metadata, structured data, and crawl files
+globs: "**/app/**/{page,layout}.{tsx,jsx,ts,js,mdx},**/pages/**/*.{tsx,jsx,astro,vue,md,mdx},**/src/layouts/**,**/templates/**/*.html,**/public/{robots.txt,sitemap.xml,llms.txt}"
+alwaysApply: false
+---
+
+# SEO (public routes)
+
+- Metadata through the framework mechanism (Next `metadata`/`generateMetadata`, layout props, Django blocks) — server-rendered.
+- Unique title (≤60) + description (70–160), one H1, canonical, OG/Twitter image, honest JSON-LD.
+- Changing public routes or layouts → skill `seo-context`; gate `python3 rigor-os/tools/seo_context.py --check`.
+- Never fake reviews/ratings/FAQs in structured data.

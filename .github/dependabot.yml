@@ -1,0 +1,13 @@
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directories: ["/", "/templates/ci"]
+    schedule: { interval: weekly }
+    groups:
+      actions: { patterns: ["*"] }
+  - package-ecosystem: docker
+    directories: ["/docker/django", "/docker/react"]
+    schedule: { interval: weekly }
+  - package-ecosystem: docker-compose
+    directories: ["/docker/fullstack", "/docker/django", "/docker/shahrah"]
+    schedule: { interval: weekly }

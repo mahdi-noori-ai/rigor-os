@@ -1,13 +1,18 @@
 {
-  "PreToolUse": [
-    {
-      "matcher": "Bash",
-      "hooks": [
-        {
-          "type": "command",
-          "command": "python3 -c \"import json,sys,re; d=json.load(sys.stdin); c=(d.get('tool_input') or {}).get('command',''); bad=re.search(r'rm\\\\s+-rf\\\\s+/($|\\\\s)|DROP\\\\s+DATABASE|git\\\\s+push.*--force', c, re.I); print(json.dumps({'decision':'block','reason':'Destructive command blocked'}) if bad else '{}')\""
-        }
-      ]
-    }
-  ]
+  "description": "Rigor OS: block destructive and secret-leaking shell commands before they run.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "^Bash$",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 \"$(git rev-parse --show-toplevel)/.codex/hooks/guard_shell.py\"",
+            "statusMessage": "Rigor OS guard",
+            "timeout": 10
+          }
+        ]
+      }
+    ]
+  }
 }

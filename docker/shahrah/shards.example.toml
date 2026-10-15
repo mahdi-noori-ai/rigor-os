@@ -1,0 +1,29 @@
+# Three shards in one region. Every table must be declared: geo-partitioned by a
+# key ([policy.keys.*]) or replicated everywhere ([policy.replicated.*]).
+region = "na-east"
+
+[policy.keys.users]
+column = "id"
+type = "int"          # int | text | uuid
+
+[policy.replicated.plans]
+writer_region = "na-east"
+
+[[shards]]
+number = 1
+region = "na-east"
+primary  = { address = "pg1:5432", region = "na-east" }
+replicas = [{ address = "pg1-replica:5432", region = "na-east" }]
+logical  = [{ start = 0, end = 21844 }]
+
+[[shards]]
+number = 2
+region = "na-east"
+primary = { address = "pg2:5432", region = "na-east" }
+logical = [{ start = 21845, end = 43689 }]
+
+[[shards]]
+number = 3
+region = "na-east"
+primary = { address = "pg3:5432", region = "na-east" }
+logical = [{ start = 43690, end = 65535 }]

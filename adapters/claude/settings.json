@@ -1,9 +1,28 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
   "permissions": {
     "deny": [
-      "Bash(rm -rf /)",
-      "Bash(git push --force*)",
-      "Bash(*DROP DATABASE*)"
+      "Bash(git push --force *)",
+      "Bash(git push -f *)",
+      "Bash(terraform destroy *)",
+      "Read(.env)",
+      "Read(.env.local)",
+      "Read(.env.*.local)",
+      "Read(.env.prod*)",
+      "Read(.env.staging*)",
+      "Read(**/secrets/**)",
+      "Read(**/*.pem)",
+      "Read(**/*.key)",
+      "Read(**/id_rsa*)",
+      "Read(**/id_ed25519*)"
+    ],
+    "ask": [
+      "Bash(git push *)",
+      "Bash(docker compose down *)",
+      "Bash(npm install *)",
+      "Bash(pnpm add *)",
+      "Bash(uv add *)",
+      "Bash(pip install *)"
     ]
   },
   "hooks": {
@@ -13,7 +32,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 -c \"import json,sys,re; d=json.load(sys.stdin); c=d.get('tool_input',{}).get('command',''); bad=re.search(r'rm\\\\s+-rf\\\\s+/($|\\\\s)|DROP\\\\s+DATABASE|git\\\\s+push.*--force', c, re.I); print(json.dumps({'decision':'block','reason':'Destructive command blocked'} ) if bad else json.dumps({}))\""
+            "command": "python3 \"${CLAUDE_PROJECT_DIR}/.claude/hooks/guard_shell.py\"",
+            "timeout": 10
           }
         ]
       }

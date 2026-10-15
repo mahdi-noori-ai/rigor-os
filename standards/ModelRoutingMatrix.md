@@ -87,8 +87,27 @@ Never run Architecture Reviewer on a typo.
 
 | Logical tier | Cursor | Claude Code | Codex / Copilot |
 |--------------|--------|-------------|-----------------|
-| T0–T1 | Faster/cheaper model if UI allows; avoid Task subagents | Haiku/Sonnet-class if configured | Default smaller / fewer turns |
-| T2 | Default strong agent model | Sonnet-class | Default agent |
-| T3 | Best available / thinking model; reviewers as subagents with best model | Opus/best; agent `model:` max | Best available |
+| T0–T1 | Faster/cheaper model if UI allows; avoid Task subagents | `haiku` / `sonnet`, effort `low`–`medium` | Default smaller / fewer turns, low reasoning |
+| T2 | Default strong agent model | `sonnet`, effort `high` | Default agent, medium–high reasoning |
+| T3 | Best available / thinking model; reviewers as subagents with best model | `opus` (or strongest available), effort `xhigh`/`max`; subagent `model:` + `effort:` frontmatter | Best available, high reasoning |
+
+## Reasoning effort is the second dial
+
+Many tools now expose a reasoning-effort setting next to the model (Claude Code `effort: low|medium|high|xhigh|max`
+in subagent frontmatter and the session; Codex `model_reasoning_effort`). Route both:
+
+| Tier | Model alias | Effort |
+|------|-------------|--------|
+| T0 | economy | low |
+| T1 | standard | medium |
+| T2 | strong | high |
+| T3 | max | xhigh / max |
+
+Cheaper than switching models: drop effort first for routine T1 work; raise effort before escalating the model.
+
+## Prompt caching
+
+Keep the always-loaded kernel (CLAUDE.md / AGENTS.md / constitution) stable and at the top of context — edits to
+it invalidate cached prefixes for every session. Put volatile notes in `project-context/` files that are read on demand.
 
 Exact IDs: `project-context/MODEL_ROUTING.md`.

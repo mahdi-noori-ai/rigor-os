@@ -108,3 +108,18 @@ Language note: architectural conclusions below are in English for portability of
 - https://owasp.org/API-Security/editions/2023/en/0x11-t10/
 - https://abseil.io/resources/swe-book/html/ch11.html
 - https://opentelemetry.io/docs/specs/otel/logs/data-model/
+
+## Addendum — October 2026 refresh (fork)
+
+Sources checked when updating adapters, security, and infrastructure guidance:
+
+- Claude Code hooks (`hookSpecificOutput.permissionDecision`), permissions (deny-first, `Read(...)` rules), subagent frontmatter (`model`, `effort`, `permissionMode`, `disallowedTools`), plugins — [code.claude.com/docs](https://code.claude.com/docs/en/hooks)
+- Codex hooks (`{"hooks": {...}}`, `tool_input.command`, deny via `permissionDecision` or exit 2) and skills in `.agents/skills` — [learn.chatgpt.com/docs/hooks](https://learn.chatgpt.com/docs/hooks), [build-skills](https://learn.chatgpt.com/docs/build-skills)
+- Cursor hooks (`version: 1`, `beforeShellExecution`, `failClosed`, `permission`) — [cursor.com/docs/agent/hooks](https://cursor.com/docs/agent/hooks); Cursor skills read `.agents/skills`, `.claude/skills` — [cursor.com/docs/context/skills](https://www.cursor.com/docs/context/skills)
+- Copilot agent skills (`.github/skills`, `.agents/skills`, `.claude/skills`) — [docs.github.com](https://docs.github.com/en/copilot/concepts/agents/about-agent-skills)
+- Agent Skills open standard — [agentskills.io](https://agentskills.io)
+- MCP 2026-07-28 (stateless core, MRTR, `Mcp-Method`/`Mcp-Name`, RFC 9207 `iss`, CIMD, deprecations) — [blog.modelcontextprotocol.io](https://blog.modelcontextprotocol.io/posts/2026-07-28/)
+- OWASP Top 10:2025 — [owasp.org/Top10/2025](https://owasp.org/Top10/2025/); OWASP Top 10 for Agentic Applications 2026 — [genai.owasp.org](https://genai.owasp.org/resource/owasp-top-10-for-agentic-applications/)
+- GitHub Actions hardening: SHA pinning policy — [GitHub changelog](https://github.blog/changelog/2025-08-15-github-actions-policy-now-supports-blocking-and-sha-pinning-actions/); zizmor
+- Google: AI features need no special optimization beyond indexability and snippet eligibility — [developers.google.com/search/docs/appearance/ai-features](https://developers.google.com/search/docs/appearance/ai-features)
+- Postgres 18 Docker data directory (`/var/lib/postgresql/18/docker`) — [hub.docker.com/_/postgres](https://hub.docker.com/_/postgres); endoflife.date for PostgreSQL / Node.js; python.org (3.15.0 released 2026-10-09)

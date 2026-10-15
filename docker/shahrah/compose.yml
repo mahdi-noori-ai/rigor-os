@@ -1,0 +1,54 @@
+# shahrah — region-aware PostgreSQL proxy (pooling, read/write split, geo-sharding).
+# Fork: https://github.com/mahdi-noori-ai/shahrah  (upstream: rs-alireza/shahrah)
+#
+# Single-region quick start (pass-through + pooling, no topology file):
+#   cp rigor-os/docker/shahrah/.env.example .env.shahrah   # set both passwords
+#   docker compose -f rigor-os/docker/shahrah/compose.yml --env-file .env.shahrah up --build
+#   psql "postgresql://app:app@127.0.0.1:6432/app"            # app traffic
+#   psql -h 127.0.0.1 -p 6432 -U app shahrah -c 'SHOW HELP'   # console
+#
+# Sharded / multi-region: mount a topology (see shards.example.toml) and set
+# SHAHRAH_CONFIG. Read skills/database/PostgresScalingSkill.md first.
+
+name: shahrah-demo
+
+services:
+  db:
+    image: postgres:18-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-app}
+      POSTGRES_USER: ${POSTGRES_USER:-app}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+      SHAHRAH_BACKEND_PASSWORD: ${SHAHRAH_BACKEND_PASSWORD:?Set SHAHRAH_BACKEND_PASSWORD}
+    volumes:
+      - pgdata:/var/lib/postgresql
+      - ./init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  shahrah:
+    build:
+      context: https://github.com/mahdi-noori-ai/shahrah.git#main
+    environment:
+      SHAHRAH_LISTEN: 0.0.0.0:6432
+      SHAHRAH_BACKEND: db:5432
+      SHAHRAH_BACKEND_USER: shahrah
+      SHAHRAH_BACKEND_PASSWORD: ${SHAHRAH_BACKEND_PASSWORD:?Set SHAHRAH_BACKEND_PASSWORD}
+      SHAHRAH_MAX_POOL: ${SHAHRAH_MAX_POOL:-50}
+      SHAHRAH_METRICS_LISTEN: 0.0.0.0:9187
+      SHAHRAH_METRICS_PASSWORD: ${SHAHRAH_METRICS_PASSWORD:?Set SHAHRAH_METRICS_PASSWORD (openssl rand -base64 32)}
+      # SHAHRAH_CONFIG: /etc/shahrah/shards.toml
+    # volumes:
+    #   - ./shards.example.toml:/etc/shahrah/shards.toml:ro
+    ports:
+      - "127.0.0.1:6432:6432"   # PostgreSQL wire protocol
+      - "127.0.0.1:9187:9187"   # dashboard + /metrics (password protected)
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

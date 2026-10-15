@@ -1,0 +1,90 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions: {}
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  tools:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    strategy:
+      matrix:
+        python: ["3.10", "3.14"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: uv run --with pytest python -m pytest -q
+      - run: uvx ruff check .
+      - run: uvx ruff format --check .
+
+  docs-and-config:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - name: Internal links and rigor-os path references
+        run: python3 tools/check_links.py
+      - name: JSON / TOML parse
+        run: |
+          for f in $(git ls-files '*.json' '*.json.example'); do python3 -m json.tool "$f" > /dev/null || exit 1; done
+          python3 -c "import tomllib,sys; [tomllib.load(open(f,'rb')) for f in sys.argv[1:]]" $(git ls-files '*.toml')
+      - name: Skill frontmatter (Agent Skills format)
+        run: |
+          for f in adapters/skills/*/SKILL.md; do
+            dir=$(basename "$(dirname "$f")")
+            head -1 "$f" | grep -qx -- '---' || { echo "$f: missing frontmatter"; exit 1; }
+            grep -qx "name: $dir" "$f" || { echo "$f: name must equal folder ($dir)"; exit 1; }
+            grep -q '^description: .\{40,\}' "$f" || { echo "$f: description too short"; exit 1; }
+          done
+      - name: Compose files resolve
+        run: |
+          mkdir -p /tmp/proj && cp -R . /tmp/proj/rigor-os && cd /tmp/proj
+          printf 'SECRET_KEY=x\nSHAHRAH_BACKEND_PASSWORD=x\nSHAHRAH_METRICS_PASSWORD=x\n' > .env
+          for f in fullstack django react shahrah; do docker compose -f rigor-os/docker/$f/compose.yml --env-file .env config -q; done
+      - name: Adapter sync smoke test
+        run: |
+          mkdir -p /tmp/host && cp -R . /tmp/host/rigor-os
+          bash /tmp/host/rigor-os/tools/sync-adapters.sh all
+          test -x /tmp/host/.claude/hooks/guard_shell.py
+          test -f /tmp/host/.agents/skills/seo-context/SKILL.md
+          test -f /tmp/host/.github/agents/seo-strategist.agent.md
+          echo '{"tool_input":{"command":"rm -rf /"}}' | python3 /tmp/host/.codex/hooks/guard_shell.py | grep -q '"deny"'
+
+  shell:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: shellcheck tools/*.sh adapters/cursor/hooks/*.sh docker/shahrah/init/*.sh
+
+  workflows:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: zizmorcore/zizmor-action@f9597c869b2e67095f9b527070297a13a6efe928 # v0.7.0
+        with:
+          advanced-security: false
+          inputs: .github/workflows templates/ci/github-actions-ci.yml

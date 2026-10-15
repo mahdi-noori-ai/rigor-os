@@ -24,11 +24,13 @@ Reusable procedures loaded when the task matches a precise `description`.
 
 Independent context with different incentives or tool sets.
 
-**Justified agents (only three):**
+**Justified agents (three core + one opt-in):**
 
 1. Orchestrator — the main session (governance), not a spawn.
 2. Security Reviewer — adversarial, read-only.
 3. Architecture Reviewer — global structure, read-only.
+4. SEO Strategist — *opt-in*, only for public web/app-store surfaces. Reads the whole route tree and copy
+   (not the diff), may research public sources, and writes only `project-context/SEO_CONTEXT.md`.
 
 **Not agents:** "Pagination specialist", "Redis specialist", "Unit test engineer" — those are skills.
 
