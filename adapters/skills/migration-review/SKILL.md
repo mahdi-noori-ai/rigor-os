@@ -5,4 +5,4 @@ description: Review and write production-safe database migrations with rollback 
 
 # Migration review
 
-Follow `rigor-os/skills/database/MigrationReviewSkill.md` and `workflows/DatabaseMigration.md`.
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/database/MigrationReviewSkill.md` and `workflows/DatabaseMigration.md`.

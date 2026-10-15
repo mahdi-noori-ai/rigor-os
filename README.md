@@ -29,6 +29,7 @@ Works with **Cursor** (first-class), plus adapters for **Claude Code**, **OpenAI
 | **Security** | OWASP Top 10:2025 + Agentic Top 10 in `SecurityGate`; Constitution Principle 9 (untrusted input is data) |
 | **Tools** | `bootstrap.py` no longer overwrites your edited context, prunes `node_modules`, detects uv/pnpm/Next/FastAPI/Rust/Go/MCP/SEO surfaces; `validate-gates.sh` no longer turns failures into passes; `sync-adapters.sh` works in both layouts and backs up files it replaces |
 | **Model routing** | Reasoning *effort* as the second routing dial; prompt-cache-friendly kernel guidance |
+| **Claude Code plugin** | `/plugin marketplace add mahdi-noori-ai/rigor-os` — skills, agents, guard hook, and a SessionStart kernel without copying files |
 
 ---
 
@@ -94,6 +95,23 @@ Then in the agent:
 > Build user profile management with backend API, frontend forms, auth, validation, and database changes.
 
 It should inspect siblings, pick skills, implement in a sensible order, verify integration, and attach **command output** — or report **BLOCKED** instead of fake success.
+
+### Install as a Claude Code plugin
+
+No vendoring needed — the repository is also a plugin marketplace:
+
+```text
+/plugin marketplace add mahdi-noori-ai/rigor-os
+/plugin install rigor-os@rigor-os
+```
+
+You get the 18 skills (namespaced `rigor-os:<skill>`), the `security-reviewer`, `architecture-reviewer`, and
+`seo-strategist` agents, the destructive-command guard (`PreToolUse`), and a `SessionStart` hook that loads the
+constitution kernel and tells Claude where the plugin lives. Project context still lives in your repo: run
+`python3 <plugin path>/tools/bootstrap.py --root .` once (the session kernel prints the exact command).
+Plugins cannot set permission rules, so copy the `deny` list from
+[`adapters/claude/settings.json`](adapters/claude/settings.json) into `.claude/settings.json` if you want
+`.env` reads blocked too.
 
 Other tools:
 

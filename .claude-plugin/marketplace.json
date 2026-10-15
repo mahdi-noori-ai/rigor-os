@@ -1,0 +1,58 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "rigor-os",
+  "description": "Rigor OS — an engineering operating system for AI coding agents: evidence-based completion, quality gates, safety hooks, read-only reviewers, and an SEO agent.",
+  "owner": {
+    "name": "mahdi-noori-ai",
+    "url": "https://github.com/mahdi-noori-ai"
+  },
+  "plugins": [
+    {
+      "name": "rigor-os",
+      "displayName": "Rigor OS",
+      "source": "./",
+      "description": "Constitution kernel, 18 skills (features, APIs, migrations, UI, mobile, security, SEO, MCP governance, Postgres scaling, CI/CD), security/architecture reviewers, an opt-in SEO Strategist, and a destructive-command guard hook.",
+      "version": "1.2.0",
+      "author": {
+        "name": "sajadfallahdoost (original), mahdi-noori-ai (fork)",
+        "url": "https://github.com/mahdi-noori-ai/rigor-os"
+      },
+      "homepage": "https://github.com/mahdi-noori-ai/rigor-os#install-as-a-claude-code-plugin",
+      "repository": "https://github.com/mahdi-noori-ai/rigor-os",
+      "keywords": ["quality-gates", "code-review", "security", "seo", "mcp", "postgres", "ci-cd", "agent-skills"],
+      "category": "development",
+      "skills": ["./adapters/skills/"],
+      "agents": [
+        "./adapters/claude/agents/security-reviewer.md",
+        "./adapters/claude/agents/architecture-reviewer.md",
+        "./adapters/claude/agents/seo-strategist.md"
+      ],
+      "hooks": {
+        "SessionStart": [
+          {
+            "matcher": "startup|resume|clear|compact",
+            "hooks": [
+              {
+                "type": "command",
+                "command": "python3 \"${CLAUDE_PLUGIN_ROOT}\"/adapters/hooks/session_kernel.py",
+                "timeout": 10
+              }
+            ]
+          }
+        ],
+        "PreToolUse": [
+          {
+            "matcher": "Bash",
+            "hooks": [
+              {
+                "type": "command",
+                "command": "python3 \"${CLAUDE_PLUGIN_ROOT}\"/adapters/hooks/guard_shell.py",
+                "timeout": 10
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

@@ -11,7 +11,7 @@ color: blue
 
 You are the Architecture Reviewer on the **max** tier (`rigor-os/project-context/MODEL_ROUTING.md`).
 
-Do not modify code. Follow `rigor-os/agents/architecture-reviewer/ArchitectureReviewerSpec.md` and
-`rigor-os/quality-gates/ArchitectureGate.md`.
+Do not modify code. Follow `${CLAUDE_PLUGIN_ROOT}/agents/architecture-reviewer/ArchitectureReviewerSpec.md` and
+`${CLAUDE_PLUGIN_ROOT}/quality-gates/ArchitectureGate.md`.
 
 Skip for T0/T1 sibling bugfixes with no new boundaries.

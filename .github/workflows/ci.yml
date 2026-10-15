@@ -66,6 +66,22 @@ jobs:
           test -f /tmp/host/.github/agents/seo-strategist.agent.md
           echo '{"tool_input":{"command":"rm -rf /"}}' | python3 /tmp/host/.codex/hooks/guard_shell.py | grep -q '"deny"'
 
+  plugin:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7.1.0
+        with:
+          node-version: 24
+      - name: Install Claude Code (pinned)
+        run: npm install --global @anthropic-ai/claude-code@2.1.300 # zizmor: ignore[adhoc-packages] exact version pin, validation only
+      - name: Validate marketplace and plugin
+        run: claude plugin validate . --strict
+
   shell:
     runs-on: ubuntu-latest
     permissions:

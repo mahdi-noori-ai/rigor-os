@@ -5,6 +5,6 @@ description: Create or improve Docker multi-stage builds, Compose stacks, and ea
 
 # Docker setup
 
-Follow `rigor-os/skills/devops/DockerSkill.md` and templates under `rigor-os/docker/`.
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/devops/DockerSkill.md` and templates under `${CLAUDE_PLUGIN_ROOT}/docker/`.
 
 Multi-stage, non-root, healthchecks, `.dockerignore`, secrets via env. Prefer fullstack compose for one-command bring-up.

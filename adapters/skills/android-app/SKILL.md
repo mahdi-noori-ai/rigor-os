@@ -5,12 +5,12 @@ description: Build or change Android app features with Kotlin/Compose structure,
 
 # Android app
 
-Follow `rigor-os/workflows/MobileFeature.md` and:
+Follow `${CLAUDE_PLUGIN_ROOT}/workflows/MobileFeature.md` and:
 
-- `rigor-os/skills/mobile/AndroidAppSkill.md`
-- `rigor-os/skills/mobile/overlays/android-kotlin/AndroidKotlinOverlay.md`
-- `rigor-os/skills/mobile/MobileApiClientSkill.md`
-- `rigor-os/skills/mobile/MobileUiUxSkill.md`
-- `rigor-os/quality-gates/MobileGate.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/mobile/AndroidAppSkill.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/mobile/overlays/android-kotlin/AndroidKotlinOverlay.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/mobile/MobileApiClientSkill.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/mobile/MobileUiUxSkill.md`
+- `${CLAUDE_PLUGIN_ROOT}/quality-gates/MobileGate.md`
 
 Match existing architecture. Evidence: unit tests + assembleDebug + emulator/device smoke.

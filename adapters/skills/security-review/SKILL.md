@@ -5,6 +5,6 @@ description: Adversarial security review for auth, permissions, user data, uploa
 
 # Security review
 
-Follow `rigor-os/quality-gates/SecurityGate.md` and `rigor-os/skills/security/AppSecReviewSkill.md`.
+Follow `${CLAUDE_PLUGIN_ROOT}/quality-gates/SecurityGate.md` and `${CLAUDE_PLUGIN_ROOT}/skills/security/AppSecReviewSkill.md`.
 
 Require object-level and function-level authorization tests. Block DONE on critical/high findings.

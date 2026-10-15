@@ -13,4 +13,12 @@
 Hooks are deterministic; a `PreToolUse` deny blocks even under permissive modes. `.env.example` stays readable
 because deny rules list concrete secret files rather than `.env.*`.
 
-Install: `bash rigor-os/tools/sync-adapters.sh claude`
+Install, either:
+
+- **Plugin:** `/plugin marketplace add mahdi-noori-ai/rigor-os` then `/plugin install rigor-os@rigor-os`. The marketplace
+  entry in `.claude-plugin/marketplace.json` is the manifest: it lists `adapters/skills/` and the three agents (so the
+  root `skills/` and `agents/` doc folders are never scanned), a `SessionStart` hook that prints the kernel
+  (`adapters/hooks/session_kernel.py` — plugin `CLAUDE.md` files are not loaded), and the guard hook. Skills and agents
+  reference docs as `${CLAUDE_PLUGIN_ROOT}/…`. Permission rules cannot ship in a plugin.
+- **Vendored:** `bash rigor-os/tools/sync-adapters.sh claude` — copies the same files and rewrites
+  `${CLAUDE_PLUGIN_ROOT}` to the path of `rigor-os/` in your project.

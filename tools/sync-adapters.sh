@@ -30,15 +30,34 @@ A="$OS/adapters"
 
 run() { if [[ $DRY -eq 1 ]]; then echo "  [dry-run] $*"; else "$@"; fi; }
 
-# put SRC DEST — copy one file, backing up a different existing DEST.
+# Skills and agents reference docs as ${CLAUDE_PLUGIN_ROOT}/… so they also work when
+# installed as a Claude Code plugin; outside plugin mode that becomes the path to
+# Rigor OS as seen from the target project.
+case "$OS" in
+  "$TARGET") OS_REF="." ;;
+  "$TARGET"/*) OS_REF="${OS#"$TARGET"/}" ;;
+  *) OS_REF="$OS" ;;
+esac
+RENDERED="$(mktemp)"
+trap 'rm -f "$RENDERED"' EXIT
+
+# put SRC DEST — copy one file (Markdown rendered), backing up a different existing DEST.
 put() {
   local src="$1" dest="$2"
+  if [[ "$src" == *.md ]]; then
+    # Literal ${CLAUDE_PLUGIN_ROOT} token in the files, not a shell expansion.
+    # shellcheck disable=SC2016
+    sed 's#${CLAUDE_PLUGIN_ROOT}#'"$OS_REF"'#g' "$src" > "$RENDERED"
+  else
+    cp "$src" "$RENDERED"
+  fi
   run mkdir -p "$(dirname "$dest")"
-  if [[ -f "$dest" ]] && ! cmp -s "$src" "$dest"; then
+  if [[ -f "$dest" ]] && ! cmp -s "$RENDERED" "$dest"; then
     run cp "$dest" "$dest.bak"
     echo "  backup  ${dest#"$TARGET"/}.bak"
   fi
-  run cp "$src" "$dest"
+  if [[ $DRY -eq 1 ]]; then echo "  [dry-run] write $dest"; else cat "$RENDERED" > "$dest"; fi
+  if [[ -x "$src" ]]; then run chmod +x "$dest"; fi
   echo "  wrote   ${dest#"$TARGET"/}"
 }
 

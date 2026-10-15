@@ -5,11 +5,11 @@ description: Implement mobile game features on Android (Unity/Godot/native) with
 
 # Mobile game
 
-Follow `rigor-os/workflows/MobileGameFeature.md` and:
+Follow `${CLAUDE_PLUGIN_ROOT}/workflows/MobileGameFeature.md` and:
 
-- `rigor-os/skills/mobile/MobileGameSkill.md`
-- `rigor-os/skills/mobile/MobileBackendApiSkill.md`
-- Engine overlay under `rigor-os/skills/mobile/overlays/`
-- `rigor-os/quality-gates/MobileGate.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/mobile/MobileGameSkill.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/mobile/MobileBackendApiSkill.md`
+- Engine overlay under `${CLAUDE_PLUGIN_ROOT}/skills/mobile/overlays/`
+- `${CLAUDE_PLUGIN_ROOT}/quality-gates/MobileGate.md`
 
 Never trust the client alone for currency, score, or entitlements.

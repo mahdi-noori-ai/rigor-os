@@ -568,9 +568,10 @@ def build(root: Path) -> dict:
 
 
 def default_out_dir(root: Path) -> Path:
-    if (root / "rigor-os" / "project-context").is_dir():
-        return root / "rigor-os" / "project-context"
-    return root / "project-context"
+    """Same rule as bootstrap.py: vendored or plugin installs use rigor-os/project-context."""
+    if not (root / "rigor-os").is_dir() and (root / "constitution").is_dir() and (root / "skills").is_dir():
+        return root / "project-context"  # Rigor OS contents at the repository root
+    return root / "rigor-os" / "project-context"
 
 
 def main(argv: list[str] | None = None) -> int:

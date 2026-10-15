@@ -1,7 +1,7 @@
 # Tooling config for Rigor OS's own scripts and tests (the tools themselves are stdlib-only).
 [project]
 name = "rigor-os"
-version = "1.1.0"
+version = "1.2.0"
 description = "Engineering operating system for AI coding agents"
 requires-python = ">=3.10"
 

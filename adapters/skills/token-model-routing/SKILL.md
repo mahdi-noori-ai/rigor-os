@@ -5,10 +5,10 @@ description: Route tasks to economy vs max models and limit context by complexit
 
 # Token & model routing
 
-Follow `rigor-os/workflows/TaskRouting.md` and:
+Follow `${CLAUDE_PLUGIN_ROOT}/workflows/TaskRouting.md` and:
 
-- `rigor-os/skills/architecture/TokenModelRoutingSkill.md`
-- `rigor-os/standards/ModelRoutingMatrix.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/architecture/TokenModelRoutingSkill.md`
+- `${CLAUDE_PLUGIN_ROOT}/standards/ModelRoutingMatrix.md`
 - `rigor-os/project-context/MODEL_ROUTING.md`
 
 Announce: `Routing: T# | implementer=… | reviewers=…@max | skills≤N`.

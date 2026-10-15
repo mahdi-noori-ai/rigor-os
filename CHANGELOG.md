@@ -1,5 +1,21 @@
 # Changelog
 
+## 1.2.0 — 2026-10-15
+
+### Added
+- **Claude Code plugin marketplace** (`.claude-plugin/marketplace.json`): `/plugin marketplace add mahdi-noori-ai/rigor-os`.
+  The entry is the manifest and lists components explicitly so the canonical `skills/` and `agents/` doc folders are
+  not scanned. Ships the 18 portable skills, three agents, the guard hook, and `adapters/hooks/session_kernel.py`
+  (SessionStart) because plugin `CLAUDE.md` files are not loaded as context.
+- `tests/test_plugin.py` (marketplace structure, path resolution, kernel output, sync rendering) and a CI job running
+  `claude plugin validate . --strict`.
+
+### Changed
+- Portable skills and Claude agents reference docs as `${CLAUDE_PLUGIN_ROOT}/…`; `sync-adapters.sh` renders that to
+  the vendored path (and now preserves normal file modes and executable bits).
+- `bootstrap.py` writes plugin-relative commands when Rigor OS runs from the plugin cache; `seo_context.py` uses the
+  same project-context location as bootstrap; `validate-gates.sh` defaults to the current directory unless vendored.
+
 ## 1.1.0 — 2026-10-15 (optimized fork)
 
 Fork of [sajadfallahdoost/rigor-os](https://github.com/sajadfallahdoost/rigor-os) at `ca638be`. The architecture
