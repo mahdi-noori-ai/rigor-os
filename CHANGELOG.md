@@ -39,7 +39,7 @@ Fork of [sajadfallahdoost/rigor-os](https://github.com/sajadfallahdoost/rigor-os
   Astro, SvelteKit, Nuxt, Remix, HTML/Vite, Django/Jinja, and Markdown. `--check` is a CI gate.
 - **MCP governance** skill and pinned `templates/mcp.json.example` (MCP spec 2026-07-28, OWASP Agentic Top 10).
 - **PostgreSQL scaling** skill; PgBouncer compose profile; `docker/shahrah/` overlay for region-aware sharding with
-  [shahrah](https://github.com/mahdi-noori-ai/shahrah).
+  [shahrah](https://github.com/rs-alireza/shahrah) (now bundled in `shahrah/`).
 - **CI/CD templates** (`templates/ci/`): SHA-pinned actions, `permissions: {}`, zizmor, gitleaks, dependency review,
   SBOM + provenance attestation, Dependabot.
 - Portable skills `seo-context`, `mcp-governance`, `postgres-scaling`, `ci-cd`.
