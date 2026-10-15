@@ -5,6 +5,6 @@ description: Build professional-looking UI that matches the product design syste
 
 # UI design quality
 
-Follow `rigor-os/skills/frontend/UIDesignQualitySkill.md` and `FrontendUIQualitySkill.md`.
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/frontend/UIDesignQualitySkill.md` and `FrontendUIQualitySkill.md`.
 
 Reuse tokens/components, hierarchy, responsive breakpoints, loading/empty/error states, accessibility. Reject robotic defaults.

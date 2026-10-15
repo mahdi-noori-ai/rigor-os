@@ -5,6 +5,6 @@ description: Change REST API request/response/status/auth and keep frontend cons
 
 # API change
 
-Follow `rigor-os/workflows/APIChange.md` and `rigor-os/skills/api/ContractIntegritySkill.md`.
+Follow `${CLAUDE_PLUGIN_ROOT}/workflows/APIChange.md` and `${CLAUDE_PLUGIN_ROOT}/skills/api/ContractIntegritySkill.md`.
 
 Update schema + implementation + frontend types together. Verify with a real HTTP round-trip. Feature incomplete until integration verified.

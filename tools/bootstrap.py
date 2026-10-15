@@ -274,6 +274,19 @@ def detect(root: Path) -> dict:
     return info
 
 
+OS_DIR = Path(__file__).resolve().parents[1]
+PLUGIN_PREFIX = "${CLAUDE_PLUGIN_ROOT}/"
+
+
+def os_prefix(root: Path, os_dir: Path = OS_DIR) -> str:
+    """How project files should refer to Rigor OS: vendored path, repo root, or the plugin."""
+    try:
+        rel = os_dir.resolve().relative_to(root.resolve())
+    except ValueError:
+        return PLUGIN_PREFIX  # running from the Claude Code plugin cache
+    return "" if rel == Path() else f"{rel.as_posix()}/"
+
+
 def context_dir(root: Path) -> Path:
     """Prefer vendored rigor-os/project-context; else this repo's project-context."""
     nested = root / "rigor-os" / "project-context"
@@ -305,7 +318,7 @@ def join(items: list, empty: str) -> str:
     return ", ".join(items) or empty
 
 
-def render(info: dict, os_prefix: str) -> dict[str, str]:
+def render(info: dict, prefix: str) -> dict[str, str]:
     files: dict[str, str] = {}
     mcp = "; ".join(f"{m['file']} → {', '.join(m['servers']) or '?'}" for m in info["mcp"]) or "none configured"
     files[
@@ -363,18 +376,12 @@ If Android/game: also fill `MOBILE.md` in this folder (client type, engine, buil
     cmds = ["# Commands (generated — edit to match reality)", ""]
     for k, v in info["commands"].items():
         cmds += [f"## {k}", "", "```bash", v, "```", ""]
-    if info["docker"]:
-        cmds += [
-            "## docker",
-            "",
-            "```bash",
-            f"docker compose -f {os_prefix}docker/fullstack/compose.yml up --build",
-            "```",
-            "",
-        ]
-    cmds += ["## gates", "", "```bash", f"bash {os_prefix}tools/validate-gates.sh", "```", ""]
+    if info["docker"] and prefix != PLUGIN_PREFIX:  # templates build from the project root
+        compose = f"docker compose -f {prefix}docker/fullstack/compose.yml --env-file .env up --build"
+        cmds += ["## docker", "", "```bash", compose, "```", ""]
+    cmds += ["## gates", "", "```bash", f"bash {prefix}tools/validate-gates.sh", "```", ""]
     if info["seo_surface"]:
-        cmds += ["## seo_context", "", "```bash", f"python3 {os_prefix}tools/seo_context.py --check", "```", ""]
+        cmds += ["## seo_context", "", "```bash", f"python3 {prefix}tools/seo_context.py --check", "```", ""]
     files["COMMANDS.md"] = "\n".join(cmds)
 
     files["ARCHITECTURE.md"] = """# Architecture (generated stub — edit freely)
@@ -487,9 +494,9 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     pc = context_dir(root)
-    os_prefix = "rigor-os/" if pc.parent.name == "rigor-os" and pc.parent != root else ""
+    prefix = os_prefix(root)
     report: list[str] = []
-    for name, content in render(info, os_prefix).items():
+    for name, content in render(info, prefix).items():
         write(pc / name, content, args.force, args.dry_run, report)
     write(pc / "STACK_DECISION.md", stack_decision(info), args.force, args.dry_run, report)
 
@@ -499,7 +506,7 @@ def main(argv: list[str] | None = None) -> int:
     if not (info.get("backend") or info.get("frontend") or info.get("mobile")):
         print("HINT: No stack detected — use stack-selection (standards/DefaultStackMatrix.md) before scaffolding.")
     if info["seo_surface"]:
-        print(f"HINT: Public web surface found — run `python3 {os_prefix}tools/seo_context.py` for the SEO agent.")
+        print(f"HINT: Public web surface found — run `python3 {prefix}tools/seo_context.py` for the SEO agent.")
     if info["mcp"]:
         print("HINT: MCP servers configured — review them with skills/ai/MCPGovernanceSkill.md.")
     return 0

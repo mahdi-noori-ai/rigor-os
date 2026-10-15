@@ -5,6 +5,6 @@ description: Fix a bug with root-cause analysis, regression test, and minimal co
 
 # Bug fix
 
-Follow `rigor-os/workflows/BugFix.md`.
+Follow `${CLAUDE_PLUGIN_ROOT}/workflows/BugFix.md`.
 
 Reproduce → evidence → root cause → regression test → minimal fix → verify neighbors. Never comment out tests to go green.

@@ -5,10 +5,10 @@ description: Choose language, framework, and tools from project type when the us
 
 # Stack selection
 
-Follow `rigor-os/workflows/StackSelection.md` and:
+Follow `${CLAUDE_PLUGIN_ROOT}/workflows/StackSelection.md` and:
 
-- `rigor-os/skills/architecture/StackSelectionSkill.md`
-- `rigor-os/standards/DefaultStackMatrix.md`
+- `${CLAUDE_PLUGIN_ROOT}/skills/architecture/StackSelectionSkill.md`
+- `${CLAUDE_PLUGIN_ROOT}/standards/DefaultStackMatrix.md`
 
 1. Existing repo stack → match it (stop).
 2. User named stack → use it.

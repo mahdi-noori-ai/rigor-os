@@ -9,7 +9,8 @@
 set -uo pipefail
 
 OS="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-if [[ "$(basename "$OS")" == "rigor-os" ]]; then ROOT="$(dirname "$OS")"; else ROOT="$OS"; fi
+# Vendored as ./rigor-os → its parent; repo-root layout or plugin install → where you run it.
+if [[ "$(basename "$OS")" == "rigor-os" ]]; then ROOT="$(dirname "$OS")"; else ROOT="$PWD"; fi
 SKIP_TESTS=0
 for arg in "$@"; do
   case "$arg" in

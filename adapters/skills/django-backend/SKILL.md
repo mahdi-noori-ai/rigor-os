@@ -5,6 +5,6 @@ description: Implement Django/DRF features with clean architecture — presentat
 
 # Django clean architecture
 
-Follow `rigor-os/skills/backend/overlays/django-clean-architecture/DjangoCleanArchSkill.md`.
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/backend/overlays/django-clean-architecture/DjangoCleanArchSkill.md`.
 
 ORM-free services, repositories + interfaces, thin views, sibling API shapes, Ruff, service tests required.

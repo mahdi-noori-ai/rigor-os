@@ -5,4 +5,4 @@ description: Keep OpenAPI/schemas, backend, and frontend types synchronized. Use
 
 # Contract integrity
 
-Follow `rigor-os/skills/api/ContractIntegritySkill.md` and `quality-gates/IntegrationVerification.md`.
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/api/ContractIntegritySkill.md` and `quality-gates/IntegrationVerification.md`.

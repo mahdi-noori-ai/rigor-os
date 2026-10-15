@@ -5,4 +5,4 @@ description: Design backend APIs for Android apps and games — auth, leaderboar
 
 # Mobile backend API
 
-Follow `rigor-os/skills/mobile/MobileBackendApiSkill.md` with existing backend layering (`django-clean-architecture` when applicable) and `contract-integrity`.
+Follow `${CLAUDE_PLUGIN_ROOT}/skills/mobile/MobileBackendApiSkill.md` with existing backend layering (`django-clean-architecture` when applicable) and `contract-integrity`.
