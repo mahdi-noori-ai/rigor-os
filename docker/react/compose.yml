@@ -1,7 +1,8 @@
+# From your project root: docker compose -f rigor-os/docker/react/compose.yml up --build
 services:
   web:
     build:
-      context: ../..
+      context: ../../..
       dockerfile: rigor-os/docker/react/Dockerfile
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"

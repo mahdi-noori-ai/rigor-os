@@ -8,7 +8,14 @@
 !.env.example
 dist
 build
+.next
+coverage
 .coverage
 htmlcov
 media
 *.sqlite3
+.claude
+.cursor
+.codex
+.agents
+rigor-os/tmp

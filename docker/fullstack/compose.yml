@@ -1,68 +1,84 @@
-# Full stack easy bring-up (Django API + React SPA + Postgres + Redis + Nginx)
-# From project root (adjust build contexts to your layout):
-#   cp rigor-os/docker/fullstack/.env.example .env
-#   docker compose -f rigor-os/docker/fullstack/compose.yml up --build
+# Full stack bring-up: Django API + React/Vite SPA + Postgres + Redis + Nginx.
+# From your project root:
+#   cp rigor-os/docker/fullstack/.env.example .env   # then set SECRET_KEY
+#   docker compose -f rigor-os/docker/fullstack/compose.yml --env-file .env up --build
 #
-# Default: API on :8000, web on :80 via nginx proxy /api -> web:8000
+# Optional profile:
+#   --profile pooler   PgBouncer (transaction pooling); also set DB_HOST=pgbouncer in .env
+# Multi-region / data residency: see ../shahrah/ (region-aware sharding proxy).
+#
+# Web on http://localhost:8080 — nginx proxies /api and /admin to the API.
+
+name: ${COMPOSE_PROJECT_NAME:-app}
+
+x-api: &api
+  build:
+    context: ../../..
+    dockerfile: rigor-os/docker/django/Dockerfile
+  environment:
+    DATABASE_URL: postgres://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-app}@${DB_HOST:-db}:${DB_PORT:-5432}/${POSTGRES_DB:-app}
+    REDIS_URL: redis://redis:6379/0
+    DJANGO_DEBUG: ${DJANGO_DEBUG:-0}
+    SECRET_KEY: ${SECRET_KEY:?Set SECRET_KEY in .env}
+    ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+  depends_on:
+    db:
+      condition: service_healthy
+    redis:
+      condition: service_healthy
+  restart: unless-stopped
 
 services:
   db:
-    image: postgres:16-alpine
+    image: postgres:18-alpine
     environment:
       POSTGRES_DB: ${POSTGRES_DB:-app}
       POSTGRES_USER: ${POSTGRES_USER:-app}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-app}
+    command: ["postgres", "-c", "shared_preload_libraries=pg_stat_statements", "-c", "pg_stat_statements.track=all"]
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - pgdata:/var/lib/postgresql   # Postgres 18+: mount the parent, not …/data
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-app} -d ${POSTGRES_DB:-app}"]
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
       interval: 5s
       timeout: 5s
       retries: 10
+    restart: unless-stopped
+
+  pgbouncer:
+    profiles: ["pooler"]
+    image: edoburu/pgbouncer:latest   # pin a release tag (or digest) before production
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-app}@db:5432/${POSTGRES_DB:-app}
+      POOL_MODE: transaction
+      MAX_CLIENT_CONN: 1000
+      DEFAULT_POOL_SIZE: 20
+      AUTH_TYPE: scram-sha-256
+    depends_on:
+      db:
+        condition: service_healthy
 
   redis:
-    image: redis:7-alpine
+    image: redis:8-alpine   # or valkey/valkey:9-alpine
     healthcheck:
       test: ["CMD", "redis-cli", "ping"]
       interval: 5s
       timeout: 3s
       retries: 10
+    restart: unless-stopped
 
   api:
-    build:
-      context: ../../..
-      dockerfile: rigor-os/docker/django/Dockerfile
-    environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-app}@db:5432/${POSTGRES_DB:-app}
-      REDIS_URL: redis://redis:6379/0
-      DJANGO_DEBUG: ${DJANGO_DEBUG:-0}
-      SECRET_KEY: ${SECRET_KEY:-change-me-in-env}
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
+    <<: *api
     healthcheck:
-      test: ["CMD", "curl", "-fsS", "http://127.0.0.1:8000/health/"]
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/health/', timeout=4)"]
       interval: 15s
       timeout: 5s
       retries: 10
       start_period: 30s
 
   worker:
-    build:
-      context: ../../..
-      dockerfile: rigor-os/docker/django/Dockerfile
+    <<: *api
     command: ["celery", "-A", "config", "worker", "-l", "info"]
-    environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-app}:${POSTGRES_PASSWORD:-app}@db:5432/${POSTGRES_DB:-app}
-      REDIS_URL: redis://redis:6379/0
-      SECRET_KEY: ${SECRET_KEY:-change-me-in-env}
-    depends_on:
-      db:
-        condition: service_healthy
-      redis:
-        condition: service_healthy
 
   frontend:
     build:
@@ -70,18 +86,20 @@ services:
       dockerfile: rigor-os/docker/react/Dockerfile
       args:
         VITE_API_URL: /api
-    depends_on:
-      - api
+    restart: unless-stopped
 
   proxy:
-    image: nginx:1.27-alpine
+    image: nginxinc/nginx-unprivileged:1.28-alpine
     volumes:
       - ./nginx-proxy.conf:/etc/nginx/conf.d/default.conf:ro
     ports:
-      - "80:80"
+      - "${HTTP_PORT:-8080}:8080"
     depends_on:
-      - api
-      - frontend
+      api:
+        condition: service_healthy
+      frontend:
+        condition: service_started
+    restart: unless-stopped
 
 volumes:
-  postgres_data:
+  pgdata:

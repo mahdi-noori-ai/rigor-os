@@ -1,15 +1,25 @@
-# Easy local commands (copy Makefile to project root if useful)
+# Easy local commands — copy to your project root.
+COMPOSE := docker compose -f rigor-os/docker/fullstack/compose.yml --env-file .env
 
-.PHONY: up down logs bootstrap
+.PHONY: up down logs ps bootstrap gates seo
 
 up:
-	docker compose -f rigor-os/docker/fullstack/compose.yml --env-file .env up --build
+	$(COMPOSE) up --build -d
 
 down:
-	docker compose -f rigor-os/docker/fullstack/compose.yml down
+	$(COMPOSE) down
 
 logs:
-	docker compose -f rigor-os/docker/fullstack/compose.yml logs -f
+	$(COMPOSE) logs -f
+
+ps:
+	$(COMPOSE) ps
 
 bootstrap:
-	python rigor-os/tools/bootstrap.py
+	python3 rigor-os/tools/bootstrap.py
+
+gates:
+	bash rigor-os/tools/validate-gates.sh
+
+seo:
+	python3 rigor-os/tools/seo_context.py
