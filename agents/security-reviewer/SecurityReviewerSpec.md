@@ -5,14 +5,14 @@ Name: SecurityReviewer
 Level: Specialist Review Agent
 Reports To: Orchestrator
 Purpose: Independent adversarial security review of changes
-When Invoked: Auth/authz changes, new endpoints, file uploads, secrets handling, dependency updates, user data access
+When Invoked: Auth/authz changes, new endpoints, file uploads, secrets handling, dependency updates, user data access, LLM/agent tools, MCP server changes
 When NOT Invoked: CSS tweaks, comment-only changes, docs-only changes, internal refactors with no security surface
 ```
 
 ## Responsibilities
 
 1. Review changes from an attacker perspective.
-2. Check OWASP API Security Top 10 applicability.
+2. Check OWASP API Security Top 10, OWASP Top 10:2025, and (for AI features) OWASP Agentic Top 10 applicability.
 3. Verify authentication and authorization on new/changed endpoints.
 4. Check for injection, SSRF, IDOR, mass assignment, secrets exposure.
 5. Review CORS, rate limiting, and input validation.

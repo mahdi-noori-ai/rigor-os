@@ -1,0 +1,19 @@
+{
+  "_comment": "Example .mcp.json (Claude Code / Cursor .cursor/mcp.json / VS Code .vscode/mcp.json use the same mcpServers shape). Pin versions, keep secrets in env, start read-only. Remove servers you do not need. See skills/ai/MCPGovernanceSkill.md.",
+  "mcpServers": {
+    "github": {
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/readonly",
+      "headers": { "Authorization": "Bearer ${GITHUB_MCP_TOKEN}" }
+    },
+    "postgres-readonly": {
+      "command": "uvx",
+      "args": ["postgres-mcp==0.3.0", "--access-mode=restricted"],
+      "env": { "DATABASE_URI": "${DATABASE_URL_READONLY}" }
+    },
+    "playwright": {
+      "command": "npx",
+      "args": ["@playwright/mcp@0.0.83", "--isolated", "--allowed-origins", "http://localhost:3000;http://localhost:8080"]
+    }
+  }
+}

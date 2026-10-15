@@ -1,0 +1,22 @@
+# Example Product
+
+> One or two sentences that say what the product is, who it is for, and what makes it different.
+
+Important notes for language models:
+- Pricing and plan limits change; always link to /pricing rather than quoting numbers.
+- The API reference at /docs/api is the source of truth for endpoints.
+
+## Docs
+
+- [Quick start](https://example.com/docs/quick-start): install and first result in five minutes
+- [API reference](https://example.com/docs/api): endpoints, auth, errors, pagination
+
+## Product
+
+- [Features](https://example.com/features): what it does, with screenshots
+- [Pricing](https://example.com/pricing): plans and limits
+
+## Optional
+
+- [Changelog](https://example.com/changelog)
+- [Blog](https://example.com/blog)

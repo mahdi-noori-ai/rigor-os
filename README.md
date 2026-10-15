@@ -7,6 +7,29 @@ The agent should plan, implement, integrate, verify, and only call the work done
 
 Works with **Cursor** (first-class), plus adapters for **Claude Code**, **OpenAI Codex**, and **GitHub Copilot**.
 
+> **This is an optimized fork** of [sajadfallahdoost/rigor-os](https://github.com/sajadfallahdoost/rigor-os), refreshed for October 2026.
+> It keeps the original architecture and adds an SEO agent, MCP governance, PostgreSQL scaling (with
+> [shahrah](https://github.com/mahdi-noori-ai/shahrah)), hardened CI/CD and Docker templates, one tested safety
+> hook for every tool, and its own test suite. See [CHANGELOG](CHANGELOG.md) for every change and why.
+
+---
+
+## What's new in this fork
+
+| Area | Change |
+|------|--------|
+| **SEO agent** | `seo-strategist` agent + `seo-context` skill + `SEOGate`. `tools/seo_context.py` extracts routes, metadata, headings, JSON-LD, OG, crawl files, and seed terms from Next.js / Astro / SvelteKit / Nuxt / Remix / HTML / Django / Markdown, then the agent writes per-route specs and a plan for Google, Bing, AI answer engines, rich results, social, app stores, and GitHub/registries |
+| **Safety hooks** | One stdlib hook (`adapters/hooks/guard_shell.py`, 45 tests) for Claude Code, Codex, and Cursor. Fixes the Codex `hooks.json` shape, the Cursor hook that allowed everything when `jq` was missing, and the deprecated Claude output format; adds force-push, `curl \| sh`, `.env` printing, volume-wipe, and infra-teardown rules |
+| **Agent Skills** | Skills moved to `adapters/skills/` in the open [Agent Skills](https://agentskills.io) format and installed for every tool (`.claude/skills`, `.agents/skills` for Codex, `.github/skills` for Copilot, `.cursor/skills`). Claude Code went from 1 skill to 18 |
+| **Subagents** | Reviewers pinned read-only (`disallowedTools`, `permissionMode: plan`) on `opus` with `effort`; Copilot custom agents added |
+| **MCP** | `mcp-governance` skill for MCP spec 2026-07-28 (stateless core, OAuth `iss` validation, CIMD) and the OWASP Agentic Top 10; pinned `.mcp.json` template; bootstrap inventories MCP servers |
+| **Database** | `postgres-scaling` skill (measure → index → pool → replicas → partition → shard), `pg_stat_statements` on by default, PgBouncer profile, shahrah overlay for multi-region data residency |
+| **CI/CD** | SHA-pinned GitHub Actions template with `permissions: {}`, zizmor, gitleaks, dependency review, SBOM + provenance attestations; Dependabot; this repo now has its own CI |
+| **Docker** | Postgres 18 (fixes the new volume path), Python 3.14 + uv, Node 24, Redis 8 / Valkey, unprivileged nginx, cache mounts, required secrets, fixed broken build-context paths |
+| **Security** | OWASP Top 10:2025 + Agentic Top 10 in `SecurityGate`; Constitution Principle 9 (untrusted input is data) |
+| **Tools** | `bootstrap.py` no longer overwrites your edited context, prunes `node_modules`, detects uv/pnpm/Next/FastAPI/Rust/Go/MCP/SEO surfaces; `validate-gates.sh` no longer turns failures into passes; `sync-adapters.sh` works in both layouts and backs up files it replaces |
+| **Model routing** | Reasoning *effort* as the second routing dial; prompt-cache-friendly kernel guidance |
+
 ---
 
 ## The problem
@@ -53,15 +76,17 @@ Requirement → Architecture → Implementation → Integration → Verification
 
 ```bash
 # 1. Clone into your product repo (or copy this folder)
-git clone https://github.com/sajadfallahdoost/rigor-os.git
-cp -r rigor-os /path/to/your-project/
+git clone https://github.com/mahdi-noori-ai/rigor-os.git /path/to/your-project/rigor-os
 
 # 2. Detect stack and fill project memory
 cd /path/to/your-project
-python rigor-os/tools/bootstrap.py
+python3 rigor-os/tools/bootstrap.py          # re-runnable; keeps files you edited
 
-# 3. Install Cursor adapter (recommended)
-bash rigor-os/tools/sync-adapters.sh cursor
+# 3. Install an adapter (or `all`)
+bash rigor-os/tools/sync-adapters.sh cursor   # claude | codex | copilot | all
+
+# 4. Run the gates any time
+bash rigor-os/tools/validate-gates.sh
 ```
 
 Then in the agent:
@@ -78,7 +103,7 @@ bash rigor-os/tools/sync-adapters.sh codex
 bash rigor-os/tools/sync-adapters.sh copilot
 ```
 
-If you vendor the contents at the **repo root** (this repository’s layout), use `./tools/...` and paths without the `rigor-os/` prefix.
+If you vendor the contents at the **repo root** (this repository’s layout), use `./tools/...`; the scripts detect both layouts.
 
 ---
 
@@ -87,12 +112,12 @@ If you vendor the contents at the **repo root** (this repository’s layout), us
 Templates live in [`docker/`](docker/) (Django + React + Postgres + Redis + Nginx).
 
 ```bash
-cp docker/fullstack/.env.example .env
-# Point compose build contexts at your app, then:
-docker compose -f docker/fullstack/compose.yml up --build
+cp rigor-os/docker/fullstack/.env.example .env      # set SECRET_KEY
+docker compose -f rigor-os/docker/fullstack/compose.yml --env-file .env up --build
+# + PgBouncer:  --profile pooler   (and DB_HOST=pgbouncer)
 ```
 
-Images are **multi-stage**, run as **non-root**, and include **healthchecks**. Adjust `Dockerfile` `CMD` / `collectstatic` to your project layout.
+Images are **multi-stage**, run as **non-root**, use **BuildKit cache mounts**, and include **healthchecks**. Postgres 18, Redis 8 (or Valkey), Python 3.14 + uv, Node 24, unprivileged nginx. Multi-region data: [`docker/shahrah/`](docker/shahrah/compose.yml).
 
 ---
 
@@ -105,9 +130,11 @@ rigor-os/
 ├── skills/            # Backend, frontend/UI, mobile/Android/game, API, DB, security, Docker…
 ├── workflows/         # Feature, bug, API change, migration, hotfix…
 ├── quality-gates/     # DoD, testing, security, architecture, contracts
-├── adapters/          # Cursor, Claude, Codex, Copilot
-├── docker/            # Easy local/prod-shaped Compose
-├── tools/             # bootstrap.py, sync-adapters.sh
+├── adapters/          # Cursor, Claude, Codex, Copilot + shared skills/ and hooks/
+├── docker/            # Compose stacks: fullstack, django, react, shahrah
+├── templates/         # ADR, specs, CI (templates/ci), mcp.json, SEO context, llms.txt
+├── tools/             # bootstrap.py, sync-adapters.sh, validate-gates.sh, seo_context.py, check_links.py
+├── tests/             # pytest suite for the tools and hooks
 └── research/          # Why this architecture (cited)
 ```
 
@@ -145,6 +172,28 @@ If you say *“build a web app”* or *“build a mobile game”* **without** na
 **Existing code always wins.** Explicit user stack always wins. You can override in one sentence.
 
 Skill: [`stack-selection`](skills/architecture/StackSelectionSkill.md) · Workflow: [`StackSelection`](workflows/StackSelection.md)
+
+---
+
+## SEO agent
+
+Anything you publish gets an SEO context generated from its **layouts and pages**:
+
+```bash
+python3 rigor-os/tools/seo_context.py --base-url https://example.com   # → project-context/SEO_CONTEXT.{md,json}
+python3 rigor-os/tools/seo_context.py --check                          # CI gate: indexable pages need title + description
+```
+
+The extractor is deterministic (no network): routes (incl. Next.js route groups and dynamic segments), titles and
+templates, descriptions, H1/H2, canonical, robots, `lang`, hreflang, Open Graph/Twitter, JSON-LD types, images
+missing `alt`, internal links, seed terms from visible copy, plus `robots.txt` / sitemap / `llms.txt` / manifest /
+README / `package.json` / `pyproject.toml` / `AndroidManifest.xml` signals.
+
+The **SEO Strategist** agent ([spec](agents/seo-strategist/SEOStrategistSpec.md)) then writes positioning,
+intent and keyword clusters, an entity map, per-route title/description/H1/canonical/OG/JSON-LD specs, crawl files,
+and a channel plan for **Google, Bing (+IndexNow), AI answer engines (AI Overviews/AI Mode, ChatGPT search,
+Perplexity, Claude), rich results, social cards, image/video, Play Store ASO, and GitHub/package registries** —
+appended under `<!-- agent-notes -->` so reruns keep it. Gate: [SEOGate](quality-gates/SEOGate.md).
 
 ---
 
@@ -206,9 +255,27 @@ Set the profile in [`project-context/PROJECT_CONTEXT.md`](project-context/PROJEC
 | [Default stack matrix](standards/DefaultStackMatrix.md) | Languages/frameworks when you don’t specify |
 | [Model routing matrix](standards/ModelRoutingMatrix.md) | T0–T3 models & who uses max |
 | [Failure scenarios](examples/FailureScenarios.md) | How vibe-coding failures get caught |
+| [SEO context skill](skills/seo/SEOContextSkill.md) · [SEO gate](quality-gates/SEOGate.md) | Search surfaces, metadata, structured data |
+| [MCP governance](skills/ai/MCPGovernanceSkill.md) | Adding/building MCP servers safely |
+| [PostgreSQL scaling](skills/database/PostgresScalingSkill.md) | Indexes → pooling → replicas → sharding (shahrah) |
+| [CI/CD](skills/devops/CICDSkill.md) · [CI template](templates/ci/github-actions-ci.yml) | Hardened GitHub Actions |
+| [Changelog](CHANGELOG.md) | What this fork changed and why |
 
 ---
 
-## License
+## Developing Rigor OS
 
-Use and adapt in your projects. Improve the OS itself via [Framework Evolution](evolution/FrameworkEvolution.md).
+```bash
+uv run --with pytest python -m pytest -q   # tools + hooks
+uvx ruff check . && uvx ruff format --check .
+python3 tools/check_links.py               # no orphaned references
+```
+
+CI runs the same commands plus shellcheck, compose validation, an adapter-sync smoke test, and zizmor.
+
+## Credits & license
+
+Original framework by [Sajad Fallahdoost](https://github.com/sajadfallahdoost/rigor-os); shahrah by
+[rs-alireza](https://github.com/rs-alireza/shahrah) (MIT). The upstream repository has no explicit license file;
+its README says "Use and adapt in your projects", and this fork follows that. Improve the OS itself via
+[Framework Evolution](evolution/FrameworkEvolution.md).

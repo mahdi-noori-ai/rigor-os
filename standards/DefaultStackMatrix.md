@@ -11,15 +11,16 @@ Rigor OS defaults lean toward stacks the primary user already uses well: **Pytho
 
 | Layer | Default | Tools |
 |-------|---------|-------|
-| Backend | Python 3.12+, **Django** + **DRF** | Ruff, pytest, mypy/pyright optional |
-| DB | **PostgreSQL** | Django migrations |
-| Cache / jobs | **Redis** + Celery when async needed | — |
-| Frontend | **TypeScript** + **React** or **Next.js** (SEO/SSR → Next) | ESLint, tsc, Vitest/Jest as project grows |
+| Backend | Python 3.14, **Django** + **DRF** (uv for deps) | Ruff, pytest, mypy/pyright optional |
+| DB | **PostgreSQL 18** | Django migrations, `pg_stat_statements` |
+| Cache / jobs | **Redis 8** or **Valkey** + Celery when async needed | — |
+| Frontend | **TypeScript** + **React** or **Next.js** (SEO/SSR → Next), Node 24 LTS, pnpm | ESLint, tsc, Vitest; `seo-context` for public routes |
 | API contract | OpenAPI / DRF schema | openapi-typescript when FE+BE |
 | Run | **Docker Compose** | multi-stage Dockerfiles |
+| CI | GitHub Actions (`templates/ci/`) | SHA-pinned, zizmor, Dependabot |
 | Profile | Medium | |
 
-**Skills:** django-clean-architecture, api-engineer, frontend-ui-quality, contract-integrity, docker.
+**Skills:** django-clean-architecture, api-engineer, frontend-ui-quality, contract-integrity, docker, cicd, seo-context (public pages).
 
 ---
 
@@ -78,7 +79,8 @@ No backend invented unless the request needs one.
 |-------|---------|-------|
 | API | **Python** + **FastAPI** (or Django if same monorepo as main product) | Ruff, pytest |
 | Orchestration | Simple service layer first; LangGraph/equivalent only if multi-agent needed | — |
-| Retrieval | pgvector on PostgreSQL or managed vector store if already in org | — |
+| Retrieval | pgvector (HNSW) on PostgreSQL or managed vector store if already in org | — |
+| Tools | MCP servers only when needed, pinned + least privilege | mcp-governance |
 | LLM | Provider via env keys (OpenAI/Anthropic/etc.) — never commit keys | — |
 | Frontend | Next.js/React chat UI if user-facing | |
 | Eval | Fixture prompts + basic regression checks | |
@@ -86,7 +88,7 @@ No backend invented unless the request needs one.
 
 **Do not** start with a multi-agent mesh. YAGNI.
 
-**Skills:** backend-quality, api-engineer, observability, security (secrets), frontend if UI.
+**Skills:** backend-quality, api-engineer, observability, appsec-review (LLM/agentic risks), mcp-governance, frontend if UI.
 
 ---
 

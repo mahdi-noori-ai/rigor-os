@@ -35,7 +35,12 @@ Mobile / tablet / desktop. No horizontal scroll unless design requires it. Touch
 ## Performance (basic)
 
 - Don't fetch waterfalls if sibling screens batch.
-- Images: size, lazy below fold.
+- Images: explicit size, modern format, lazy below fold, priority for the LCP image.
+- Budget: LCP ≤ 2.5 s · INP ≤ 200 ms · CLS ≤ 0.1 on mobile.
+
+## Public pages (SEO)
+
+Public, indexable routes need server-rendered title/description/canonical/OG and one H1 — run `seo-context` (`skills/seo/SEOContextSkill.md`) and `SEOGate`.
 
 ## Anti-patterns
 

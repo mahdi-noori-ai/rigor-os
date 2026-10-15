@@ -59,7 +59,7 @@ Do not load L4 references on T0/T1.
 | Level | Mechanism |
 |-------|-----------|
 | L1 | `AGENTS.md` + `rules/constitution.mdc` (`alwaysApply: true`) |
-| L2 | `.cursor/skills/*/SKILL.md` description in frontmatter |
+| L2 | `.cursor/skills/*/SKILL.md` (also reads `.agents/skills`, `.claude/skills`) description in frontmatter |
 | L3 | Full `SKILL.md` body loaded when agent matches description |
 | L4 | `references/` subdirectory within skill folder |
 
@@ -80,7 +80,7 @@ Path-scoped rules (`globs`) load additional L1 constraints for specific file typ
 |-------|-----------|
 | L1 | `AGENTS.md` (32 KiB budget — keep root lean) |
 | L2 | Nested `AGENTS.md` in subdirectories (closer = higher precedence) |
-| L3 | Skills via `config.toml` skill paths |
+| L3 | Agent Skills in `.agents/skills/*/SKILL.md` (cwd → repo root) |
 | L4 | Referenced files loaded on demand |
 
 **Warning:** Codex truncates combined AGENTS.md chain at `project_doc_max_bytes` (default 32 KiB). Root-first loading means large root files starve nested instructions. Keep root AGENTS.md under 8 KiB.
@@ -90,7 +90,7 @@ Path-scoped rules (`globs`) load additional L1 constraints for specific file typ
 | Level | Mechanism |
 |-------|-----------|
 | L1 | `AGENTS.md` + `.github/copilot-instructions.md` |
-| L2 | Skill descriptions in prompt files |
+| L2 | Agent Skills in `.github/skills` (also `.agents/skills`, `.claude/skills`) |
 | L3 | `.github/instructions/*.instructions.md` (path-scoped via `applyTo`) |
 | L4 | Referenced docs |
 

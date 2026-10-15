@@ -16,6 +16,10 @@ See `agents/security-reviewer/SecurityReviewerSpec.md`.
 
 See `agents/architecture-reviewer/ArchitectureReviewerSpec.md`.
 
+### SEOStrategist (opt-in)
+
+See `agents/seo-strategist/SEOStrategistSpec.md`.
+
 ---
 
 ## Skills (index)
@@ -55,7 +59,10 @@ Each skill file already contains: Name, Domain, Purpose, Trigger, Do Not Trigger
 | `skills/mobile/overlays/unity-android/UnityAndroidOverlay.md` | unity-android |
 | `skills/architecture/StackSelectionSkill.md` | stack-selection |
 | `skills/architecture/TokenModelRoutingSkill.md` | token-model-routing |
+| `skills/seo/SEOContextSkill.md` | seo-context |
+| `skills/ai/MCPGovernanceSkill.md` | mcp-governance |
+| `skills/database/PostgresScalingSkill.md` | postgres-scaling |
 
-## Cursor skill projections
+## Portable skill projections
 
-`.cursor` copies under `adapters/cursor/skills/*/SKILL.md` point back to canonical workflows/skills for progressive disclosure in Cursor.
+`adapters/skills/*/SKILL.md` follow the [Agent Skills](https://agentskills.io) format (`name` + `description` frontmatter) and point back to canonical workflows/skills. `tools/sync-adapters.sh` installs them where each tool looks: `.cursor/skills`, `.claude/skills`, `.agents/skills` (Codex), `.github/skills` (Copilot).
