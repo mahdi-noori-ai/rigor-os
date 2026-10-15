@@ -70,7 +70,7 @@ Shard only when one primary cannot hold the write load or the data must live in 
 | **Users' rows must live in their region** (residency, latency), move users between regions online | **shahrah** — region directory in front of the shard map |
 | Fully managed distributed SQL | Cloud vendor offerings (trade portability) |
 
-### shahrah (fork: `mahdi-noori-ai/shahrah`, upstream `rs-alireza/shahrah`)
+### shahrah (bundled in `rigor-os/shahrah/`, upstream `rs-alireza/shahrah`)
 
 A Rust PostgreSQL wire-protocol proxy: applications keep their normal driver/ORM.
 
@@ -78,7 +78,8 @@ A Rust PostgreSQL wire-protocol proxy: applications keep their normal driver/ORM
 - Statements must carry the shard key; for views/joins/ORMs that hide it, add a hint comment: `/* shahrah: key=7 */ select …` (Python helper: `shahrah.hints.by_key`).
 - Console (`psql … shahrah`, simple protocol only): `WHERE IS users 100005`, `SHOW POOLS|HEALTH|TOPOLOGY|DIRECTORY`, `RELOCATE users 100005 TO eu-central`, `REPAIR`, `REBALANCE`.
 - Security defaults to keep: metrics/dashboard bound to loopback unless `SHAHRAH_METRICS_PASSWORD` is set; set `SHAHRAH_BACKEND_TLS=require` across networks (unset means **disable**); client TLS via `SHAHRAH_TLS_CERT/KEY`.
-- Local trial: `docker/shahrah/compose.yml`. Production: one topology file per fleet, Raft group (`SHAHRAH_RAFT_*`) for >1 proxy, Prometheus on `/metrics`.
+- Source and docs: `rigor-os/shahrah/README.md`, shard math in `rigor-os/shahrah/docs/SHARDS.md`, measured numbers in `rigor-os/shahrah/docs/NUMBERS.md`.
+- Local trial: `docker/shahrah/compose.yml` (builds the proxy from the bundled source). Production: one topology file per fleet, Raft group (`SHAHRAH_RAFT_*`) for >1 proxy, Prometheus on `/metrics`.
 - Design implications for the app: choose the shard key early (usually tenant/user id), keep cross-key joins out of hot paths, make global reference tables `replicated`.
 
 ## Anti-patterns

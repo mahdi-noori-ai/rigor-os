@@ -7,10 +7,31 @@ The agent should plan, implement, integrate, verify, and only call the work done
 
 Works with **Cursor** (first-class), plus adapters for **Claude Code**, **OpenAI Codex**, and **GitHub Copilot**.
 
-> **This is an optimized fork** of [sajadfallahdoost/rigor-os](https://github.com/sajadfallahdoost/rigor-os), refreshed for October 2026.
-> It keeps the original architecture and adds an SEO agent, MCP governance, PostgreSQL scaling (with
-> [shahrah](https://github.com/mahdi-noori-ai/shahrah)), hardened CI/CD and Docker templates, one tested safety
-> hook for every tool, and its own test suite. See [CHANGELOG](CHANGELOG.md) for every change and why.
+> **This is an optimized fork** of [sajadfallahdoost/rigor-os](https://github.com/sajadfallahdoost/rigor-os), refreshed for October 2026,
+> combined with **[shahrah](https://github.com/rs-alireza/shahrah)** — a Rust PostgreSQL proxy for pooling, read/write
+> splitting, and region-aware sharding — bundled in [`shahrah/`](shahrah/README.md). It keeps the original architecture
+> and adds an SEO agent, MCP governance, PostgreSQL scaling, hardened CI/CD and Docker templates, one tested safety hook
+> for every tool, a Claude Code plugin marketplace, and its own test suite. See [CHANGELOG](CHANGELOG.md).
+
+---
+
+## One project, two layers
+
+| Layer | Folder | What it does |
+|-------|--------|--------------|
+| **Rigor OS** — how agents build software | everything except `shahrah/` | Constitution, skills, workflows, quality gates, adapters, hooks, SEO agent, Docker/CI templates |
+| **shahrah** — how the data layer scales | [`shahrah/`](shahrah/README.md) (Rust + Python helper) | PostgreSQL wire-protocol proxy: pooling, read/write split, hash sharding, per-region data residency, live key relocation |
+
+They meet in three places: the [`postgres-scaling`](skills/database/PostgresScalingSkill.md) skill tells agents when to
+reach for shahrah and how to write shard-key-aware SQL; [`docker/shahrah/`](docker/shahrah/compose.yml) builds the proxy
+from `shahrah/` next to Postgres 18 for local trials; and CI ([`shahrah.yml`](.github/workflows/shahrah.yml)) builds,
+lints (clippy, MSRV 1.95), and tests it whenever `shahrah/` changes.
+
+`shahrah/` is a `git subtree` with full history, so upstream fixes merge in cleanly:
+
+```bash
+git subtree pull --prefix=shahrah https://github.com/rs-alireza/shahrah.git main
+```
 
 ---
 
@@ -153,6 +174,7 @@ rigor-os/
 ├── templates/         # ADR, specs, CI (templates/ci), mcp.json, SEO context, llms.txt
 ├── tools/             # bootstrap.py, sync-adapters.sh, validate-gates.sh, seo_context.py, check_links.py
 ├── tests/             # pytest suite for the tools and hooks
+├── shahrah/           # bundled Rust PostgreSQL proxy (git subtree, MIT)
 └── research/          # Why this architecture (cited)
 ```
 
@@ -294,6 +316,6 @@ CI runs the same commands plus shellcheck, compose validation, an adapter-sync s
 ## Credits & license
 
 Original framework by [Sajad Fallahdoost](https://github.com/sajadfallahdoost/rigor-os); shahrah by
-[rs-alireza](https://github.com/rs-alireza/shahrah) (MIT). The upstream repository has no explicit license file;
+[rs-alireza](https://github.com/rs-alireza/shahrah), bundled under its own [MIT license](shahrah/LICENSE). The upstream repository has no explicit license file;
 its README says "Use and adapt in your projects", and this fork follows that. Improve the OS itself via
 [Framework Evolution](evolution/FrameworkEvolution.md).

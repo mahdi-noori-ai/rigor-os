@@ -1,5 +1,16 @@
 # Changelog
 
+## 1.3.0 — 2026-10-15
+
+### Added
+- **shahrah bundled** in `shahrah/` via `git subtree` (full history, MIT license kept): Rigor OS and its data layer are
+  now one project. `docker/shahrah/compose.yml` builds the proxy from the bundled source instead of cloning it, and
+  `.github/workflows/shahrah.yml` runs clippy/tests on the workspace MSRV (1.95), the Python helper tests, and the
+  image build whenever `shahrah/` changes. Dependabot covers its cargo and Docker dependencies.
+
+### Changed
+- `postgres-scaling` skill and README point at the bundled source; ruff skips `shahrah/` (upstream style).
+
 ## 1.2.0 — 2026-10-15
 
 ### Added
